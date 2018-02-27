@@ -112,12 +112,14 @@
 			    
 			}, function(ret, err) {
 			    if (ret) {
-			        api.alert({ msg: JSON.stringify(ret) });
-			        var cdk = ret.result.list;
-			        for(var i=0;i<cdk.length;i++){
-			        	arr1.push(cdk[i][pic]);
-			        	arr2.push(cdk[i][url]);
+			        api.alert({ msg: JSON.stringify(ret.result.list) });
+			        
+			        for(var i=0;i<ret.result.list.length;i++){
+			        	var ak = ret.result.list[i];
+			        	arr1.push(ak.pic);
+			        	arr2.push(ak.url);
 			        }
+			        
 			    } else {
 			        api.alert({ msg: JSON.stringify(err) });
 			    }
