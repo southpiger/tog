@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css">
+	<title>Document</title>
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		ul,li,ol{
+			list-style: none;
+		}
+		.aboutus{
+			min-width: 320px;
+		}
+		.header{
+			
+			height: 48px;
+			line-height: 48px;
+			background-color: #e4e4e4;
+			text-align: center;
+			padding: 0 15px;
+			color: #333;
+			position: relative;
+			font-size: 18px;
+			padding-top: 20px;
+		}
+		
+		.back img{
+
+			width: 15px;
+			height: 23px;
+			position: absolute;
+			left: 15px;
+			top: 65%;
+			transform: translateY(-50%);
+		}
+		.main{
+			padding: 0 15px;
+			margin-top: 20px;
+		}
+		.main li{
+			border-bottom: 1px solid #e7eaec;
+			line-height: 48px;
+			padding: 0 10px;
+			font-size: 16px;
+			position: relative;
+			color: #666;
+		}
+		.main li span{
+			padding-right: 5px;
+			color: #a4a4a4;
+		}
+		.main li:after{
+			content: '';
+			position: absolute;
+			width: 8px;
+			height: 17px;
+			right: 10px;
+			top: 50%;
+			transform: translateY(-50%);
+			background: url(./Arrowright@2x.png) no-repeat;
+			background-size: 100%;
+		}
+		.info{
+			font-size: 10px !important;
+			color: #999;
+			position: fixed;
+			bottom: 15px;
+			left: 50%;
+			transform: translateX(-50%);
+		}
+		.logo{
+			text-align: center;
+			margin-top: 40px;
+			margin-bottom: 30px;
+		}
+		.logo img{
+			display: block;
+			margin: 0 auto;
+			margin-bottom: 8px;
+		}
+		.logo span{
+			font-size: 12px !important;
+			color: #888;
+		}
+	</style>
+</head>
+<body>
+	<div class="aboutus">
+		<div class="header">
+			<div class="back"><img src="./back.png" alt="" /></div>
+			<div>关于我们</div>
+		</div>
+		<div class="main">
+			<div class="logo">
+				<img src="./logo2.png" alt="" />
+				<span>v1.0.1</span>
+			</div>
+			<ul>
+				<li><span class="fa fa-phone"></span>联系我们</li>
+				<li><span class="fa fa-refresh"></span>检查更新</li>
+				<li><span class="fa fa-chain"></span>关于</li>
+			</ul>
+			<p class="info">&copy;2018 黔聊,黔ICP备16010687号-1</p>
+		</div>
+	</div>
+</body>
+</html>

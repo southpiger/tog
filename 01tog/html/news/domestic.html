@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    	<meta name="apple-mobile-web-app-capable" content="yes">
+    	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+    	<link rel="stylesheet" href="../../css/common.css" />
+		<title></title>
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			body{
+				min-width: 320px;
+			}
+			#topbar{
+				
+				height: 48px;
+				line-height: 48px;
+				font-size: 18px;
+				text-align: center;
+				background-color: #f4f4f4;
+				position: relative;
+				border-bottom: 1px solid #e8e8e8;
+				display: none;
+			}
+			#back{
+				display: block;
+				width: 15px;
+				height: 21px;
+				position: absolute;
+				bottom: 15px;
+				left: 15px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="topbar" >
+			<img src="../../image/back.png" id="back" onclick="api.closeWin()"/>
+			<div>国内新闻</div>
+		</div>
+	</body>
+	<script src="../../script/api.js"></script>
+	<script src="../../script/common.js"></script>
+	<script>
+		apiready = function(){
+			initOpen()
+		}
+	</script>
+</html>

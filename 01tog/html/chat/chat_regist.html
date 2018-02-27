@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    	<meta name="apple-mobile-web-app-capable" content="yes">
+    	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<title>实时资讯</title>
+		<link rel="stylesheet" href="../../css/api.css" />
+		<link rel="stylesheet" href="../../css/mui.css" />
+		<link rel="stylesheet" href="../../css/commonWindow.css" />
+		<style type="text/css">
+			.newsLayout_h{
+				width: 100%;
+				min-width: 320px;
+			}
+			.head{
+				font-size: 18px;
+				padding:  0 15px;
+				padding-top: 20px;
+				line-height: 48px;
+				height: 48px;
+				background-color: #f6f6f6;
+			}
+			.head .backbtn{
+				float: left;
+				line-height: 48px;
+			}
+			.head .backbtn img{
+				width: 15px;
+				height: 23px;
+				vertical-align: middle;
+				background-color: #f6f6f6;
+			}
+			.head div{
+				text-align: center;
+				line-height: 48px;
+				height: 48px;
+				background-color: #f6f6f6;
+			}
+			.main{
+				width:100%;
+				padding: 0 15px;
+				box-sizing: border-box;
+			}
+			.main div{
+				margin-top: 20px;
+				text-align: center;
+			}
+			.main input{
+				
+				height: 32px;
+				width: 80%;
+				padding: 5px 10px;
+				border: 1px solid #ccc;
+			}
+			.login{
+				margin-top: 36px;
+				text-align: center;
+			}
+			.login span{
+				background-color: #1cf;
+				padding: 0 32px;
+				line-height: 36px;
+				color: #fff;
+				border-radius: 20px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="newsLayout_h" id="topbar">
+			<div class="head clearfix">
+				<div class="backbtn " onclick="api.closeWin()">
+					<img src="../../image/back.png" alt="" />
+				</div>
+				<div>注册</div>
+			</div>
+			<div class="main">
+				<div>
+					<input type="text" placeholder="用户名" class="name" value="123456"/>
+				</div>
+				<div>
+					<input type="text" placeholder="密码" class="pwd" value="abc123"/>
+				</div>
+				<p class="login" onclick="aa()"><span>注册</span></p>
+			</div>
+		</div>
+		
+	</body>
+	
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script>
+		apiready = function(){
+			var name = $api.val($api.dom('.name'));
+			var pwd = $api.val($api.dom('.pwd'));
+			var UIEaseChat = api.require('UIEaseChat');
+			function aa(){
+				UIEaseChat.easeRegister({
+				    username: name,
+				    password: pwd
+				},function(ret, err) {
+				    if (ret.status) {
+				        api.alert({ msg:'注册成功'});
+				    } else {
+				        api.alert({ msg:JSON.stringify(err)});
+				    }
+				});
+			}
+		}
+		function regist(){
+			var name = $api.val($api.dom('.name'));
+			var pwd = $api.val($api.dom('.pwd'));
+			alert(name+'----'+pwd)
+		}
+	</script>
+	
+</html>

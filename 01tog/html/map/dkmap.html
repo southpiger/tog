@@ -1,0 +1,464 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<title>Document</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<script src="./js/jquery-1.11.1.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="./css/mui.css" />
+	<style type="text/css">
+		* {
+			list-style: none;
+		}
+
+		.topinfo {
+			height: 40px;
+			text-align: center;
+			font-size: 14px;
+			color: #333333;
+			line-height: 40px;
+		}
+
+		.topinfo img {
+			width: 27px;
+			height: 27px;
+			vertical-align: middle;
+		}
+
+		.btn {
+			width: 100%;
+			font-family: "微软雅黑";
+			font-size: 16px;;
+			font-weight: 400;
+			line-height: 40px;
+			position: relative;
+			display: inline-block;
+			margin-bottom: 0;
+			padding: 0.08rem 0.16rem;
+			cursor: pointer;
+			-webkit-transition: all;
+			transition: all;
+			-webkit-transition-timing-function: linear;
+			transition-timing-function: linear;
+			-webkit-transition-duration: .2s;
+			transition-duration: .2s;
+			text-align: center;
+			vertical-align: top;
+			white-space: nowrap;
+			color: white;
+			border: 0;
+			border-radius: 2.88px;
+			border-top-left-radius: 2.88px;
+			border-top-right-radius: 2.88px;
+			border-bottom-right-radius: 2.88px;
+			border-bottom-left-radius: 2.88px;
+			background-color: #468fe9;
+			background-clip: padding-box;
+		}
+
+		.btn-group {
+			background: white;
+			position: fixed;
+			bottom: 0;
+			height: auto;
+		}
+
+		.btn-bottom {
+			width: 100%;
+			height: 40px;
+			font-size: 0.4266rem;
+			color: #fff;
+			border: 0;
+			padding: 0;
+			position: fixed;
+			bottom: 0rem;
+			text-align: center;
+			line-height: 40px;
+			background-color: #468fe9;
+		}
+
+		.bz {
+			font-size: 0.3733rem;
+			color: #333333;
+			padding: 20px;
+			line-height: 40px;
+			height: 40px;
+		}
+
+		textarea {
+			border: none;
+			font-size: 14px;
+			color: #999999;
+		}
+
+		/* .addresslist {
+			font-size: 16px;
+			color: #333333;
+			padding-top: .32rem;
+			padding-bottom: .32rem;
+			line-height: 0.55rem;
+			border-bottom: 0.0133rem solid #e5e5e5;
+			width: 100%;
+			margin-top: .3rem;
+		} */
+
+		/* .addresslist .leftinfo {
+			width: 80%;
+			padding-left: .4rem;
+		} */
+
+		.addresslist .rightselect {
+			width: 20%;
+			float: left;
+		}
+
+		/* .addresslist .rightselect img {
+			width: 0.6rem;
+			height: 0.6rem;
+			top: 0.3rem;
+			left: 0.5rem;
+			position: relative;
+		} */
+
+		.addressitem {
+			font-size: 14px;
+			color: #999999;
+		}
+
+		.anchorBL {
+			display: none;
+		}
+		.addresslist ul{
+			background-color: #EFEFF4;
+			margin-bottom: 10px;
+		}
+
+		.addresslist li {
+		
+			margin-top: -20px;
+			border: none!important;
+		}
+
+		.addresslist li span {
+			display: block;
+			margin-top: 5px;
+			font-size: 16px;
+			
+		}
+
+		.addresslist a {
+			color: #333333!important;
+		}
+		#list{
+			font-size: 16px;
+		}
+		.mui-table-view{
+				width: 100%;
+				height: 320px;
+				overflow-y: scroll;
+				padding-top: 10px;
+
+		}
+		.mui-table-view:after{
+			height:0;
+		}
+		.mui-table-view::-webkit-scrollbar {
+			display: none;/*隐藏滚轮*/
+		}
+		#result{
+			margin-top: 10px;
+		}
+	</style>
+</head>
+
+<body>
+	<header class="mui-bar mui-bar-nav">
+		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		<h1 class="mui-title">打卡定位</h1>
+
+	</header>
+	<div class="mui-content">
+		<div class="topinfo">
+			<img src="./img/dk/10.png">
+			<span id="timeduring">8:00-12:00</span>
+		</div>
+		<div id="map" style="width:100%;height:5.6666rem">
+
+		</div>
+
+		<div id="list">
+			<!-- <div class="addresslist" data-point="">
+				<div class="leftinfo mui-ellipsis">
+					<span class="addname ">东莞市青橙软件有限公司</span>
+				</div>
+
+			</div> -->
+			<div class="addresslist" data-point="" id="result">
+				
+				<ul class="mui-table-view mui-table-view-radio" id="result_ul" style="border:0">
+				
+				</ul>
+			</div>
+		</div>
+
+
+		<div class="btn-group " style='width: 100%;'>
+			<button type="button" class="btn" id="submitBtn">
+				确定
+			</button>
+		</div>
+	</div>
+	<script src="./js/mui.js" type="text/javascript" charset="utf-8"></script>
+	<script src="./js/mymui.js" type="text/javascript" charset="utf-8"></script>
+	<script src="./js/rem.js" type="text/javascript" charset="utf-8"></script>
+	<script src="./js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=9f3caf0f96e461b6e78d6d5bf6c7a425"></script>
+	<script type="text/javascript" src="http://developer.baidu.com/map/jsdemo/demo/convertor.js"></script> 
+	<script type="text/javascript">
+		// 百度地图API功能
+			var map = new BMap.Map("map"); // 创建Map实例		
+			var geolocation = new BMap.Geolocation();
+				geolocation.getCurrentPosition(function (r) {
+				    if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+				        var mk = new BMap.Marker(r.point);
+				        map.addOverlay(mk);
+				        map.panTo(r.point);
+				        var point = new BMap.Point(r.point.lng,r.point.lat); 
+				        alert(JSON.stringify(point))
+				        getcdk(point);
+				    }else {
+					alert('failed'+this.getStatus());
+					}        
+					},{enableHighAccuracy: true})
+				
+			
+			function getcdk(point){
+				alert(JSON.stringify(point));
+				map.enableScrollWheelZoom();
+				map.clearOverlays();
+				map.centerAndZoom(point, 18);
+				var options = {
+					onSearchComplete:function (results) {
+						// 判断状态是否正确
+						if (local.getStatus() == BMAP_STATUS_SUCCESS) {
+							var s = [];
+							for (var i = 0; i < results.getCurrentNumPois(); i++) {
+								s.push("<li class='mui-table-view-cell'>" +"<a href='javascript:void(0);'class='mui-navigate-right ' >" +  "<span>" + results.getPoi(i).title + "</span>" + "<p>" + results.getPoi(i).address +
+									"</p>" + "</a>" + "</li>");
+							}
+							document.getElementById("result_ul").innerHTML = s.join("<br/>");
+						}
+					}
+				};
+				var local = new BMap.LocalSearch(map, options);
+				local.searchNearby('公司', point, 50);
+				var circle = new BMap.Circle(point, 50, {
+					fillColor: "#468FE9",
+					strokeWeight: 1,
+					fillOpacity: 0.2,
+					strokeOpacity: 0.5
+				});
+				map.addOverlay(circle);
+			}
+			
+			
+	</script>
+
+	<!-- <script type="text/javascript">
+		mui.init();
+		mui.plusReady(function () {
+
+			function hasClass(elements, cName) {
+				return !!elements.className.match(new RegExp("(\\s|^)" + cName + "(\\s|$)")); // ( \\s|^ ) 判断前面是否有空格 （\\s | $ ）判断后面是否有空格 两个感叹号为转换为布尔值 以方便做判断  
+			};
+
+			function addClass(elements, cName) {
+				if (!hasClass(elements, cName)) {
+					elements.className += " " + cName;
+				};
+			};
+
+			function removeClass(elements, cName) {
+				if (hasClass(elements, cName)) {
+					elements.className = elements.className.replace(new RegExp("(\\s|^)" + cName + "(\\s|$)"), " "); // replace方法是替换  
+				};
+			};
+
+			ws = plus.webview.currentWebview();
+			setTimeout(function () {
+				var list = document.getElementById('list');
+				var address = document.getElementById('address');
+				var submitBtn = document.getElementById('submitBtn');
+				var pointitem = document.getElementById('pointitem');
+				var bz = document.getElementById('bz');
+
+				var map = new plus.maps.Map("map");
+				map.showUserLocation(true);
+				map.getUserLocation(function (state, pos) {
+					console.log(JSON.stringify(pos));
+					if (0 == state) {
+						map.centerAndZoom(pos, 18);
+						plus.maps.Map.reverseGeocode(pos, {}, function (event) {
+							var address = event.address; // 转换后的地理位置
+							var point = event.coord; // 转换后的坐标信息
+							var coordType = event.coordType; // 转换后的坐标系类型
+							map.setCenter(pos);
+							var x = pos.longitude.toString();
+							var y = pos.latitude.toString();
+							var pointStr = y + ',' + x;
+							//								addressitem.innerHTML = address;
+							//								pointitem.innerHTML = JSON.stringify(pointStr);
+							getLocationinfo(pointStr);
+							console.log(JSON.stringify(event));
+
+						}, function (e) {
+							alert("Failed:" + JSON.stringify(e));
+						});
+					}
+				});
+			}, 300);
+			// 显示页面并关闭等待框
+			ws.show("pop-in");
+
+			submitBtn.addEventListener('tap', function (event) {
+
+				//提交 坐标   与 地址
+				var userinfoUrl = my.getUrl() + 'dk/dk';
+				var self = plus.webview.currentWebview();
+				var arr = getLocationSelect();
+				mui.ajax(userinfoUrl, {
+					data: {
+						t: my.getToken(),
+						address: arr[0],
+						point: arr[1],
+						mobile_id: my.getUuid()
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'get', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function (data) {
+						//服务器返回响应，根据响应结果，分析是否登录成功；
+						if (data.code == 1) {
+							plus.nativeUI.toast(data.msg, {
+								verticalAlign: 'center'
+							});
+						} else {
+							plus.nativeUI.toast(data.msg, {
+								verticalAlign: 'center'
+							});
+						}
+					},
+					error: function (xhr, type, errorThrown) { //异常处理；
+						console.log(type);
+						console.log(xhr);
+						console.log(errorThrown);
+					}
+				});
+			});
+
+			// 获取当前选择
+			function getLocationSelect() {
+				var selected = document.querySelector(".selected");
+				var name = document.querySelector(".selected>.leftinfo>.addname");
+				var returnarr = new Array();
+				returnarr[0] = name.innerHTML;
+				returnarr[1] = selected.getAttribute("data-point");
+				return returnarr;
+			}
+
+			// 获取当前选择
+			function resetSelect() {
+				var selected = document.querySelector(".selected");
+				var img = document.querySelector(".selected>.rightselect>img");
+				removeClass(selected, 'selected');
+				img.src = '../../img/dbsx/3.png';
+				//					alert(selected.getAttribute("data-point"));
+			}
+
+			// 请求坐标附近的建筑信息
+			function getLocationinfo(point) {
+				//提交 坐标   与 地址
+				var baiduLocation =
+					'http://api.map.baidu.com/geocoder/v2/?ak=gyT76RMDCYUljK95CWzwMFqLptuSsC7M&callback=renderReverse&output=json&pois=1';
+				mui.ajax(baiduLocation, {
+					data: {
+						'location': point,
+						'radius': 300
+					},
+					dataType: 'text', // 服务器返回json格式数据
+					type: 'get', // HTTP请求类型
+					timeout: 10000, // 超时时间设置为10秒；
+					success: function (data) {
+						//服务器返回响应，根据响应结果，分析是否登录成功；
+						var start = data.indexOf('(') + 1;
+						var stringObj = data.substring(start, data.length - 1);
+						var obj = JSON.parse(stringObj);
+						var formatted_address = obj.result.formatted_address;
+						var pois = obj.result.pois;
+						var strInner = '';
+						if (pois != null) { // 附近地址是否为空
+							for (var i = 0; i < pois.length; i++) {
+								var obj_pois = pois[i];
+								var x = obj_pois.point.x.toString();
+								var y = obj_pois.point.y.toString();
+								var pointStr = y + ',' + x;
+
+								if (i == 0) {
+									strInner +=
+										'<div class="addresslist selected" data-point="' +
+										pointStr + '">' +
+										'	<div class="leftinfo mui-ellipsis">' +
+										'		<span class="addname ">' +
+										obj_pois.name +
+										'</span>' +
+										'		<div class="addressitem mui-ellipsis">' +
+										formatted_address + obj_pois.addr +
+										'		</div>' +
+										'	</div>' +
+										'	<div class="rightselect">' +
+										'		<img src="../../img/dbsx/32.png" />' +
+										'	</div>' +
+										'</div>';
+								} else {
+									strInner +=
+										'<div class="addresslist" data-point="' +
+										pointStr + '">' +
+										'	<div class="leftinfo mui-ellipsis">' +
+										'		<span class="addname ">' +
+										obj_pois.name +
+										'</span>' +
+										'		<div class="addressitem mui-ellipsis">' +
+										formatted_address + obj_pois.addr +
+										'		</div>' +
+										'	</div>' +
+										'	<div class="rightselect">' +
+										'		<img src="../../img/dbsx/3.png" />' +
+										'	</div>' +
+										'</div>';
+								}
+							}
+						}
+						list.innerHTML = strInner;
+
+						mui('#list').on('tap', '.addresslist', function () {
+							resetSelect();
+							if (!hasClass(this, 'selected')) {
+								addClass(this, 'selected');
+							}
+							var childs = this.children;
+							childs[1].children[0].src = '../../img/dbsx/32.png';
+						});
+					},
+					error: function (xhr, type, errorThrown) { //异常处理；
+						console.log(type);
+						console.log(xhr);
+						console.log(errorThrown);
+					}
+				});
+			}
+		});
+	</script>  -->
+</body>
+
+</html>

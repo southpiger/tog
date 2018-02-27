@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+		<meta name="apple-mobile-web-app-capable" content="yes">
+    	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<title>首页</title>
+		<link rel="stylesheet" href="../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+		<link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css">
+		<style type="text/css">
+			.homepage{
+				width: 100%;
+				min-width: 320px;
+			}
+			.head{
+				padding-top: 20px;
+				line-height: 48px;
+				height: 48px;
+				background-color: #f6f6f6;
+			}
+			.topbar{
+				
+				font-size: 18px;
+				text-align: center;
+				display: none;
+			}
+			.topbar.act{
+				display: block;
+			}
+			.footbar{
+				position: fixed;
+				bottom: 0;
+				width: 100%;
+				background-color: #f6f6f6;
+				padding: 10px 0;
+			}
+			.barlis li{
+				width: 25%;
+				float: left;
+				text-align: center;
+				font-size: 14px;
+				color: #999;
+				
+			}
+			.barlis li span{
+				font-size: 24px;
+			}
+			.barlis li.ave{
+				color: indianred;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="homepage" >
+			<div class="head">
+				<p class="topbar act" id="cloud">首页</p>
+				<p class="topbar " id="cate">分类</p>
+				<p class="topbar " id="shopcar">购物车</p>
+				<p class="topbar " id="mine">我的</p>
+			</div>
+
+			<div class="main">
+
+			</div>
+
+			<div class="footbar" id="footer">
+				<ul class="barlis clearfix">
+					<li class="ave" onclick="openFrame(this,'cloud',0)"><span class="fa fa-home"></span><br />首页</li>
+					<li class="" onclick="openFrame(this,'cate',1)"><span class="fa fa-list"></span><br />分类</li>
+					<li class="" onclick="openFrame(this,'shopcar',2)"><span class="fa fa-shopping-cart"></span><br />购物车</li>
+					<li class="" onclick="openFrame(this,'mine',3)"><span class="fa fa-user"></span><br />我的</li>
+				</ul>
+			</div>
+		</div>
+	</body>
+
+	<script src="../../script/api.js"></script>
+	<script src="../../script/zepto.min.js"></script>
+	<script>
+		apiready = function(){
+			var head = $api.dom('.head');   /*获取页面中的dom元素，类似queryselector getElementBy*/
+			var footer = $api.dom('.footbar');
+			var head_h = $api.offset(head).h;  /*获取页面山个head的高度*/
+			var body_h = api.winHeight;
+			var footer_h = $api.offset(footer).h;
+			var rect_h = body_h-head_h-footer_h;	/*计算出frame的高度*/
+			api.openFrameGroup({
+				name:'group',
+				scrollEnabled:false,
+				rect:{
+					x: 0,
+        			y: head_h,
+        			w: 'auto',
+        			h: rect_h
+				},
+				index:0,
+				frames:[
+					{
+						name:'home',
+						url:"./home_body.html"
+					},
+					{
+						name:'classfiy',
+						url:"../classfiy/classfiy.html"
+					},
+					{
+						name:'shopcar',
+						url:"../shopcar/shopcar.html"
+					},
+					{
+						name:'mine',
+						url:"../mine/main.html"
+					}
+				]
+			},function(res,err){
+//				alert(JSON.stringify(res))
+			});
+			
+			api.addEventListener({
+	            name: 'keyback'
+	        }, function (ret, err) {
+	            closeOnKeyBack();
+	        });
+		}
+		
+		//点击切换按钮
+		function  openFrame(obj,name,index){
+			var head = $api.dom('.head');
+			var $bars = $api.domAll(head,'.topbar');
+			for(var i=0;i<$bars.length;i++){
+				$api.removeCls($bars[i],'act');
+			}
+			$api.addCls($api.byId(name),'act');
+
+			var footer = $api.byId('footer');
+			var $footerBar = $api.domAll(footer,'li');
+			
+			for(var j =0;j<$footerBar.length;j++){
+				$api.removeCls($footerBar[j],'ave');
+				
+			}
+			$api.addCls(obj,'ave');
+			
+			api.setFrameGroupIndex({
+				name:'group',
+				index:index
+			})
+		}
+		
+		var backButtonPress = 0;
+	    function closeOnKeyBack() {
+    		backButtonPress++;
+	        if (backButtonPress > 1) {
+	            closeApp();
+	        } else {
+	            api.toast({msg: '再按一次退出应用'});
+	        }
+	        setTimeout(function () {
+	            backButtonPress = 0;
+	        }, 1000);
+	        
+	    }
+	   
+	    function closeApp(){
+		    api.closeWidget({
+		        retData: {name: 'closeWidget'},
+		        silent: false,		/*false会弹出提示框点击确定退出应用  ，true时直接退出应用，没有提示框*/
+		        animation: {
+		            type: 'none',
+		            subType: 'from_bottom',
+		            duration: 500
+		        }
+		    });
+		}
+	</script>
+</html>

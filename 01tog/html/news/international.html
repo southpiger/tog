@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    	<meta name="apple-mobile-web-app-capable" content="yes">
+    	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<title></title>
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			body{
+				width: 100%;
+				min-width: 320px;
+			}
+			#topbar{
+				border-bottom: 1px solid #e8e8e8;
+				height: 48px;
+				line-height: 48px;
+				background-color: #f4f4f4;
+				position: relative;
+				text-align: center;
+				font-size: 18px;
+				display: none;
+			}
+			#back{
+				display: block;
+				width: 15px;
+				height: 21px;
+				position: absolute;
+				bottom: 15px;
+				left: 15px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="topbar">
+			<img src="../../image/back.png" alt="" id="back" onclick="api.closeWin()"/>
+			<div>国际热点</div>
+		</div>
+	</body>
+	<script src="../../script/api.js"></script>
+	<script src="../../script/common.js"></script>
+	<script>
+		apiready = function(){
+			initOpen();
+		}
+	</script>
+</html>

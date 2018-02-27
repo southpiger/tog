@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+    	<link rel="stylesheet" href="../../css/api.css">
+		<title></title>
+		<style type="text/css">
+			table{
+				margin: 0 auto;
+				margin-top: 50px;
+			}
+			tr{
+				margin: 5px 10px;
+			}
+			td{
+				border: 1px solid indianred;
+				padding: 5px 10px;
+				height: 24px;
+				line-height: 24px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="main">
+			<table>
+				<thead>
+					<td>姓名</td>
+					<td>年龄</td>
+					<td>性别</td>
+					<td>年级</td>
+					<td>学习</td>
+					<td>家庭地址</td>
+					<td>到学校距离</td>
+					<td>家庭财产</td>
+					<td>房屋面积</td>
+				</thead>
+				<tbody id="cti">
+					
+				</tbody>
+			</table>
+		</div>
+		<div class="tp">
+			<input type="text" class="inp"/>
+			<input type="button" value="搜索" class="btn"/>
+		</div>
+	</body>
+	<!--<script type="text/html" id="tom">
+		<tr>
+			<td>{{ret.name}}</td>
+			<td>{{ret.age}}</td>
+			<td>{{ret.sex}}</td>
+			<td>{{ret.class}}</td>
+			<td>{{ret.school}}</td>
+			<td>{{ret.home}}</td>
+			<td>{{ret.distance}}</td>
+			<td>{{ret.property}}</td>
+			<td>{{ret.house}}</td>
+		</tr>
+	</script>-->
+	<script src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/template-native.js"></script>
+	<script src="../../script/template.js"></script>
+	<script src="../../script/jquery.js"></script>
+	<script>
+//		apiready = function(){
+			/*var tom1 = $api.byId('tom1');
+			api.ajax({
+				url:"http://www.mocky.io/v2/5a5dcf7c3300002b11191914",
+				method:'get'
+			},function(ret){
+				var html = template(ret,tom1);
+				alert($api.jsonToStr(ret))
+				$api.html($api.byId('cti'),html);
+			})*/
+//		}
+		$(function(){
+			/*$.ajax({
+				type:"GET",
+				url:"http://www.mocky.io/v2/5a5de76333000020151919b7",
+				dataType:'jsonp',
+				jsonp:'callback',
+				success:function(ret){
+					var html = template('tom1',ret);
+                    $('#cti').html(html);
+				}
+			});*/
+			/*$.ajax(  
+			    {  
+			        type:'get',  
+			        url : 'http://www.mocky.io/v2/5a5decde3300009b141919d9',  
+			        dataType : 'jsonp',  
+			        jsonp:"jsoncallback",
+			        success:function(ret) {  
+			        	alert(ret.km)
+			             var html = template('tom',ret);
+			             $('#cti').html(html)
+			             
+			        }
+			    }  
+			);  */
+			var aa = $(".inp").val();
+			var bb = "http://baike.baidu.com/api/openapi/BaikeLemmaCardApi?scope=103&format=json&appid=379020&bk_key="+aa;
+			$('.btn').click(function(){
+				$.ajax({
+					type:"get",
+					url:"bb",
+					datatype:'jsonp',
+					success:function(res){
+						var cc = res.body;
+						console.log(cc)
+					}
+				});
+			})
+		})
+	</script>
+</html>

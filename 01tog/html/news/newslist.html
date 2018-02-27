@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    	<meta name="apple-mobile-web-app-capable" content="yes">
+    	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<title>新闻列表</title>
+		<link rel="stylesheet" href="../../css/api.css" />
+		<link rel="stylesheet" href="../../css/mui.min.css" />
+		<script src="../../script/common.js"></script>
+		<style type="text/css">
+			*{
+				box-sizing: content-box;
+				-webkit-box-sizing: content-box;
+				background-color: #fff;
+			}
+			.clearfix:before{
+				content: '';
+				height: 0;
+				line-height: 0;
+				display: block;
+				visibility: hidden;
+				clear: both;
+			}
+			.news{
+				width: 100%;
+				min-width: 320px;
+			}
+			.head{
+				font-size: 18px;
+				padding:  0 15px;
+				padding-top: 20px;
+				line-height: 48px;
+				height: 48px;
+				background-color: #f6f6f6;
+			}
+			.head .backbtn{
+				float: left;
+				line-height: 48px;
+			}
+			.head .backbtn img{
+				width: 15px;
+				height: 23px;
+				vertical-align: middle;
+				background-color: #f6f6f6;
+			}
+			.head div{
+				text-align: center;
+				line-height: 48px;
+				height: 48px;
+				background-color: #f6f6f6;
+			}
+			.newsnav{
+				height: 48px;
+				line-height: 48px;
+				border-bottom: 6px solid #F6F6F6;
+				overflow-x: scroll;
+			}
+			.newsnav li{
+				float: left;
+				display: inline;
+				width: 25%;
+				text-align: center;
+				color: #333;
+				overflow-x: scroll;
+			}
+			.mui-table-view:before{
+				content: '';
+				height: 0;
+				line-height: 0;
+			}
+			.mui-table-view-cell:after{
+				left: 0;
+			}
+			.mui-table-view-cell>a:not(.mui-btn).mui-active{
+				background-color: #fff;
+			}
+			.mui-media-body{
+				line-height: 18px;
+			}
+			.mui-media-body .title_name{
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				font-size: 16px;
+				color: #363636;
+				display: inline-block;
+				width: 100%;
+			}
+			.mui-media-body .mui-ellipsis{
+				font-size: 12px;
+				color: #999;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="news">
+			<div class="head clearfix">
+				<div class="backbtn " onclick="api.closeWin()">
+					<img src="../../image/back.png" alt="" />
+				</div>
+				<div>新闻资讯</div>
+			</div>
+			<ul class="newsnav clearfix">
+				
+			</ul>
+			<div class="content clearfix">
+				<ul class="mui-table-view">
+				<li class="mui-table-view-cell mui-media" onclick="openNewsInfo(0)">
+					<a href="javascript:;">
+						<img class="mui-media-object mui-pull-left" src="../../image/shuijiao.jpg">
+						<div class="mui-media-body">
+							<span class="title_name">宠物店主好心代养走失狗狗，却被狗主人砸店</span>
+							<p class='mui-ellipsis'>“你说，我是不是以后都不该‘多管闲事’了？”1月11日下午，阳光斜斜地打进夏先生的宠物店，在一群猫狗簇拥的房间里，夏先生一脸失落地问钱报记者，虽然过去了两天，但他说自己还是感到心寒。就在两天前，夏先生临时收留了一条狗友送来的走失小狗，还发朋友圈发动大家的力量一起帮忙寻找狗主人，后来狗主人找到了，对方非但没有感谢，反而叫了一帮亲友到店里砸店打人，骂他们是偷狗销赃的贼。</p>
+						</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media" onclick="openNewsInfo(1)">
+					<a href="javascript:;">
+						<img class="mui-media-object mui-pull-left" src="../../image/yuantiao.jpg">
+						<div class="mui-media-body">
+							<span class="title_name">云南一男子网购19亿巨额存单 到银行提现吓坏工作人员</span>
+							<p class='mui-ellipsis introduce'>1月9日，云南玉溪市易门县一男子季某手持19亿元的巨额定期存单到某银行柜台取款，银行工作人员在看到该男子19亿的存单后被吓了一跳。随后，工作人员仔细查看了这张巨额存单，发现该存单有许多伪造痕迹，并且银行系统内也没有该存单的记录。在银行工作人员确定其存单系伪造后，立即向易门县公安局龙泉派出所报了警。</p>
+						</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media" onclick="openNewsInfo(2)">
+					<a href="javascript:;">
+						<img class="mui-media-object mui-pull-left" src="../../image/cbd.jpg">
+						<div class="mui-media-body">
+							<span class="title_name">上海酒店门口出租车乱象多 执法部门“拔钉子”</span>
+							<p class='mui-ellipsis'>上海出租车违法现象哪里最多？执法者会告诉你，高星级宾馆酒店门口出租车挑客、拒载、多收费的情况较为猖獗，是违法事件多发点。</p>
+						</div>
+					</a>
+				</li>
+			</ul>
+			</div>
+		</div>
+	</body>
+	
+	<script id="newslist" type="text/html">
+		
+		<li>头条</li>
+		<li>新闻</li>
+		<li>财经</li>
+		<li>体育</li>
+		<li>娱乐</li>
+		<li>军事</li>
+	</script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/mui.min.js"></script>
+	<script src="../../script/jquery-3.2.1.min.js"></script>
+	<script src="../../script/template-native.js"></script>
+	
+	<script>
+		
+		var head = $api.dom('.head');
+		var head_h = $api.offset(head).h;
+		var nav = $api.dom('.newsnav');
+		var nav_h = $api.offset(nav).h;
+		var body_h;
+		var frame_h = body_h-nav_h-head_h;
+
+		apiready = function(){
+			body_h= api.winHeight;
+			
+			ajaxGetUser('./news.json',{},function(ret){
+//				alert(ret.code)
+			})
+		}
+			
+			var ts = document.querySelector('.title_name');
+			var ins = document.querySelector('.introduce');
+		
+			$.ajax({
+			   url: "news.json",//json文件位置
+			   type: "GET",//请求方式为get
+			   dataType: "json", //返回数据格式为json
+			   success: function(res) {//请求成功完成后要执行的方法 
+			       var ak = res.result.news;
+			       for(var i=0;i<ak.length;i++){
+//			       		alert(ak[i].title);
+			       		$(ts[i]).html(ak[i].title)
+//			       		alert(ak[i].introduce);
+			       		$(ins[i]).html(ak[i].introduce);
+			       }
+			   }
+			})
+		
+		window.onload = function(){
+			var data = {};	
+			var html = template('newslist',data);
+//			var html1 = template('scriptDiv2',data);
+	        document.querySelector(".newsnav").innerHTML = html;
+		}
+		
+		function openlocal(){
+			
+			openNewWindows('domestic','./domestic.html')
+		}
+		
+		function opennational(){
+			
+			openNewWindows('international','./international.html')
+		}
+
+		function openNewsInfo(i){
+			var k = $api.domAll('.title_name');
+			var info = $api.domAll('.mui-ellipsis');
+			var k_h = $api.html(k[i])
+			var info_h = $api.html(info[i])
+			var arr=['央视新闻','滇池新闻','沪江新闻'];
+			var arr_h = arr[i];
+			
+			var browser = api.require('webBrowser');
+			browser.open({
+			    url: 'http://www.baidu.com'
+			});
+//			openNewWindows('newsinfo','./newsInfo.html',{name:k_h,source:arr_h,info:info_h});
+		}
+
+		//ajax函数
+		function ajaxGetUser(url, getData, callBack) {
+		    api.ajax({
+		        url: url,
+		        method: 'get',
+		        timeout: 60,
+		        dataType: 'json',
+		        returnAll: false,
+		        headers: {
+		        		"Accept-Encoding": "gzip",
+//		        		"version" : version,
+			        	"type" :   1
+		        	},
+		        data: {
+		            values: getData
+		        }
+		    }, function (ret, err) {
+		        callBack(ret, err);
+		    });
+		}
+//		初始化template
+		function addDataToHtml(result){
+			var data = {};	
+			var html = template('newslist',data);
+//			var html1 = template('scriptDiv2',data);
+	        document.querySelector(".newsnav").innerHTML = html;
+//	        document.querySelector("#local span").innerHTML = html1;
+		}
+	</script>
+</html>

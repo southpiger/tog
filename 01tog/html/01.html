@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    	<meta name="apple-mobile-web-app-capable" content="yes">
+    	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<title>知识小视频</title>
+		<link rel="stylesheet" href="../css/api.css" />
+		<link rel="stylesheet" href="../css/animate.css" />
+		<style type="text/css">
+			html,body{
+				width: 100%;
+				height: 100%;
+				background: rgba(0,0,0,0.1);
+				position: relative;
+			}
+			.videoShare{
+				position: fixed;
+				bottom: 0;
+				left: 0;
+				width: 100%;
+				font-size: 18px;
+				min-width: 320px;
+				background: #fff;
+			}
+			.sharemain{
+				width: 100%;
+				background-color: #fff;
+				text-align: center;
+			}
+			.sharetitle{
+				width: 100%;
+				font-size: 16px;
+				margin-top: 10px;
+				text-align: center;
+			}
+			.sharebar {
+				margin-top: 10px;
+				overflow: hidden;
+			}
+			.sharebar li{
+				width: 25%;
+				float: left;
+				padding-top: 14px;
+			}
+			.sharebar li img{
+				width: 60%;
+				border-radius: 50%;
+			}
+			.sharebar li p{
+				font-size: 12px;
+				color: #535353;
+			}
+			.sharemain .cancel{
+				background-color: #fff;
+				width: 92%;
+				border-top: 1px solid #dedede;
+				font-size: 16px;
+				line-height: 44px;
+				letter-spacing:8px;
+				margin: 20px auto 0;
+				text-align: center;
+			}
+			
+			@-webkit-keyframes videoShare-out{
+		          0% {
+		            -webkit-transform: translateY(25px) ;
+		          }
+		          10%{
+		          	-webkit-transform: translateY(20px);
+		          }
+		          20%{
+		          	-webkit-transform: translateY(15px);
+		          }
+		          30%{
+		          	-webkit-transform: translateY(10px);
+		          }
+		          40%{
+		          	-webkit-transform: translateY(5px);
+		          }
+		          50% {
+		            -webkit-transform: translateY(0px) ;
+		          }
+		          60% {
+		            -webkit-transform: translateY(-5px) ;
+		          }
+		          70% {
+		            -webkit-transform: translateY(-10px) ;
+		          }
+		          80% {
+		            -webkit-transform: translateY(-15px) ;
+		          }
+		          90% {
+		            -webkit-transform: translateY(-20px) ;
+		          }
+		          100% {
+		            -webkit-transform: translateY(-25px) ;
+		          }
+			}
+			.kk{
+				-webkit-animation-name: videoShare-out;
+				-webkit-animation-duration: 0.15s;
+				-webkit-animation-timing-function: linear;
+				-webkit-animation-iteration-count: 3;
+			}
+			
+		</style>
+	</head>
+	<body onclick="api.closeWin()">	
+		
+		<div class="videoShare">
+			<div id="main">
+
+			<p class="sharetitle">分享至</p>
+			<div class="sharemain">
+				<ul class="sharebar">
+				<li >
+					<img src="../image/wx.png" alt="" />
+					<p>微信</p>
+				</li>
+				<li>
+					<img src="../image/wxfriend.png" alt="" />
+					<p>朋友圈</p>
+				</li>
+				<li>
+					<img src="../image/qq.png" alt="" />
+					<p>QQ</p>
+				</li>
+				<li>
+					<img src="../image/qqkj.png" alt="" />
+					<p>QQ空间</p>
+				</li>
+				<li>
+					<img src="../image/sina.png" alt="" />
+					<p>新浪微博</p>
+				</li>
+			</ul>
+			<p class="cancel" >取消</p>
+			</div>
+			</div>
+		</div>
+		
+	</body>
+	<script type="text/javascript" src="../script/api.js"></script>
+	<script src="../script/jquery-3.2.1.min.js"></script>
+		<script>
+//			  window.onload = function(){
+			  	$("#main").addClass("animated bounceInUp");
+				  setTimeout(function(){
+				  	$("#main").removeClass("bounce");
+				  },2000);
+//			  }
+
+		</script>
+</html>

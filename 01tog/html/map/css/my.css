@@ -1,0 +1,29 @@
+/* 首页 */
+li{
+	list-style: none;
+}
+.appnav{
+	margin-top: 15px;
+	display: block;
+	width: 100%;
+	position: relative;
+	padding: 0;
+	padding: 0 5px;
+}
+.appnav-cell{
+	width: 25%;
+	float: left;
+	margin: 0;
+    text-align: center;
+    vertical-align: top;
+    position: relative;
+    padding: 5px 0;
+}
+.appnav-cell a{
+	overflow: hidden;
+	font-size: 11px;
+	color: #272727;
+}
+.appnav-cell a img{
+	width: 32px;
+}

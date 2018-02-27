@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+    	<link rel="stylesheet" href="../../css/api.css">
+		<title></title>
+		<style type="text/css">
+			.tk{
+				background-color: rgba(0,0,0,0.8);
+				color: #EEEEEE;
+				position: fixed;
+				bottom: 0;
+				left: 0;
+				top: 0;
+				right: 0;
+				overflow-y: scroll;
+			}
+			.main{
+				padding: 0 15px;
+				padding-top: 20px;
+			}
+			#city{
+				height: 32px;
+				border: 1px solid #999;
+				margin-right: 20px;
+				padding: 5px 10px;
+			}
+			.btn{
+				float: right;
+				margin-right: 15px;
+				height: 36px;
+				line-height: 36px;
+				border: 1px solid #999;
+				padding: 5px 10px;
+				
+			}
+			.tk #weatherinfo{
+				padding:10px 15px 10px 15px;
+			}
+			#weatherinfo li{
+				padding: 5px 0;
+			}
+			.timeinfo{
+				width: 100%;
+				overflow-x: scroll;
+				white-space: nowrap;
+			}
+			.timeinfo .info{
+				width: 60px;
+				text-align: center;
+				display: inline-block;
+			}
+			.dayinfo{
+				margin-top: 10px;
+				width: 100%;
+				overflow-x: scroll;
+				white-space: nowrap;
+			}
+			.dayinfo .info{
+				width: 80px;
+				text-align: center;
+				display: inline-block;
+			}
+			.life{
+				margin: 5px 0;
+			}
+			#local{
+				padding: 10px 0;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="tk">
+			<div class="main" id="topbar">
+				<div id="local">当前位置：<span><script type="text/html" id="scriptDiv2"><%=list.city%></script></span></div>
+				<input type="text" id="city"/> 
+				<input type="button" value="查询" class="btn" onclick="getWeather1()"/>
+			</div>
+			<ul id="weatherinfo">
+				
+			</ul>
+		</div>
+	</body>
+	<script id="scriptDiv1" type="text/html">
+			<li>城市：<%=list.city%> </li>
+			<li>日期：<%=list.date%> (<%=list.week%>)</li>
+			<li>天气：<%=list.weather%></li>
+			<li>当前温度：<%=list.temp%>°C  最高温度：<%=list.temphigh%>°C  最低温度：<%=list.templow%>°C</li>
+			<li>空气湿度：<%=list.humidity%></li>
+			<li>风力：<%=list.winddirect%> <%=list.windpower%></li>
+			<li>更新时间：<%=list.updatetime%></li>
+			<li>生活指数：<br/>
+				<%for(var i=0;i<list.index.length;i++){%>
+					<div class="life">
+						<span class="lifename"><%=list.index[i].iname%></span> ： <span class="lifeval"><%=list.index[i].ivalue%></span>
+						<p class="lifeinfo"><%=list.index[i].detail%></p>
+					</div>
+				<%}%>
+			</li>
+			<li>PM2.5：<%=list.aqi.pm2_524%> 空气质量：<%=list.aqi.quality%> <%=list.aqi.timepoint%>更新</li>
+			<li class="timeinfo">
+				<%for(var i=0;i<list.hourly.length;i++){%>
+					<ul class="info">
+						<li><%=list.hourly[i].time%></li>
+						<li><%=list.hourly[i].weather%></li>
+						<li><%=list.hourly[i].temp%>°C</li>
+					</ul>
+				<%}%>
+			</li>
+			<li class="dayinfo">
+				<%for(var i=0;i<list.daily.length;i++){%>
+					<ul class="info">
+						<li><%=list.daily[i].week%></li>
+						<li><%=list.daily[i].day.weather%></li>
+						<li><%=list.daily[i].day.windpower%></li>
+						<li><%=list.daily[i].day.temphigh%>°C\<%=list.daily[i].night.templow%>°C</li>
+					</ul>
+				<%}%>
+			</li>
+			
+	</script>
+	<script src="../../script/api.js"></script>
+	<script src="../../script/template-native.js"></script>
+	<script>
+		apiready = function(){
+			var header = document.querySelector('#topbar');
+			$api.fixStatusBar(header);
+			var baiduLocation = api.require('baiduLocation');
+			baiduLocation.getLocation(function(ret, err) {
+				    var newsum = ret.latitude+','+ret.longitude;
+				    alert(newsum)
+			    	$api.setStorage('newsum',newsum);
+				});
+			
+			if($api.getStorage('sum') == null){
+				baiduLocation.getLocation(function(ret, err) {
+				    var sum = ret.latitude+','+ret.longitude;
+				    alert(sum)
+			    	$api.setStorage('sum',sum);
+				});
+			}
+			
+			if($api.getStorage('sum') != $api.getStorage('newsum')){
+				$api.rmStorage('sum');
+				var a = $api.getStorage('newsum');
+				$api.setStorage('sum',a);
+			}
+		}
+		window.onload = function(){
+			setTimeout("getWeather()",1000);
+		}
+		
+		function getWeather(){
+			var sum = $api.getStorage('sum');
+			alert(sum)
+			ajaxGetUser('http://api.jisuapi.com/weather/query?appkey=61bdbb002f1edc13&location='+sum,{},function(ret,err){
+				if (ret.status == "0") {
+					addDataToHtml(ret.result);
+				}else{
+					alert("网络错误！");
+				}
+        	});
+		}
+		function getWeather1(){
+			var city = $api.val($api.byId('city'));
+			alert(city)
+			
+			ajaxGetUser('http://api.jisuapi.com/weather/query?appkey=61bdbb002f1edc13&city='+city,{},function(ret,err){
+				if (ret.status == "0") {
+					addDataToHtml(ret.result);
+				}else{
+					alert("网络错误！");
+				}
+        	});
+        	$api.val($api.byId('city'),'');
+		}
+		function addDataToHtml(result){
+			var data = {list: result};	
+			var html = template('scriptDiv1',data);
+			var html1 = template('scriptDiv2',data);
+	        document.getElementById("weatherinfo").innerHTML = html;
+	        document.querySelector("#local span").innerHTML = html1;
+		}
+		
+		function ajaxGetUser(url, getData, callBack) {
+		    api.ajax({
+		        url: url,
+		        method: 'get',
+		        timeout: 60,
+		        dataType: 'json',
+		        returnAll: false,
+		        headers: {
+		        		"Accept-Encoding": "gzip",
+//		        		"version" : version,
+			        	"type" :   1
+		        	},
+		        data: {
+		            values: getData
+		        }
+		    }, function (ret, err) {
+		        callBack(ret, err);
+		    });
+		}
+	</script>
+</html>

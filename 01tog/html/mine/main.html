@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../../css/api.css">
+    <title>登陆</title>
+    <style>
+         html,body{
+            height: 100%;
+            width: 100%;
+            /*background-color: #f4f4f4;*/
+            color: #333;
+            overflow: hidden;
+        }
+        .phone{
+            /*margin-top: 18px;*/
+            height: 54px;
+            /*border-top: 1px solid #dbdbdb;*/
+            background-color: #fff;
+            box-sizing: border-box;
+            width: 100%;
+            line-height: 52px;
+            font-size: 14px; 
+            position: relative;
+            display: flex;
+        }
+        .phone span{
+            position: absolute;
+            width: 12px;
+            height: 20px;
+            overflow: hidden;
+            left: 5%;
+            top: 16px;
+        }
+        .phone span img{
+            display: block;
+            width: 100%;
+        }
+        .number{
+            margin-left: 15%;
+            outline: none;
+            height: 52px;
+            line-height: 52px;
+            font-size: 15px;
+            color: #999999;
+            border-bottom: 1px solid #dbdbdb;
+            flex: 1;
+            color: #333;
+        }
+        .verify{
+            width: 100%;
+            background-color: #fff;
+            height: 52px;
+            position: relative;
+            display: flex;
+            line-height:52px;
+            border-bottom:1px solid #dbdbdb; 
+        }
+        .verify span:nth-child(1){
+            position: absolute;
+            width: 20px;
+            height: 17px;
+            top:16px;
+            left:5%;
+        }
+        .verify span:nth-child(1) img{
+            display: block;
+            width: 100%;
+        }
+        .verify input{
+            margin-left: 15%;
+            color: #dbdbdb;
+            line-height: 52px;
+            font-size: 15px;
+            outline: none;
+            width:19%;
+            overflow: hidden; 
+        }
+        .verify .count{
+            position: absolute;
+            height: 35px;
+            width: 28%;
+            background-color: #999999;
+            color: #fff;
+            right: 38% ;
+            top:9px;
+            line-height: 35px;
+            text-align: center;
+            font-size: 10px;
+        }
+        .verify .get-verify{
+            position: absolute;
+            height: 35px;
+            width: 28%;
+            background-color: #ff9900;
+            color: #fff;
+            top: 9px;
+            right:6%;;
+            line-height: 35px;
+            text-align: center;
+        }
+        .btn{
+            margin: 0 auto;
+            margin-top: 77px;
+            width: 80%;
+            background-color: #31c27c;
+            color: #fff;
+            font-size: 17px;
+            height: 51px;
+            text-align: center;
+            line-height: 51px;
+        }
+        .tip{
+            margin: 0 auto;
+            margin-top: 30px;
+            width: 80%;
+            font-size: 12px;
+            line-height: 24px;
+            color: #cccccc;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login">
+        <div class="phone">
+            <span>
+                <!--<img src="../../image/phone.jpg" alt="">-->
+            </span>
+            <input id="phone" type="text"maxlength="11" placeholder="手机号" class="number">
+        </div>
+        <div class="verify">
+            <span>
+                <!--<img src="../../image/verify.jpg" alt="">-->
+            </span>
+            <input id="phone_pass" style="color: #333;" maxlength="6" type="text" placeholder="验证码">
+            <!--<span class="count">60秒后重新发送</span>-->
+            <span id="sms" class="get-verify" onclick="settimeout()">获取验证码</span>
+        </div>
+    </div>
+    <div class="btn" id="loginButton" onclick="openmap()">登陆</div>
+    
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/template-native.js"></script>
+<script src="../../script/common.js"></script>
+
+<script>
+	apiready = function(){
+//		bindPush();
+		/***关闭主界面***/
+		/*api.closeWin({
+			name: "main"
+		});*/
+		//      setLocationValue();
+        //添加安卓退出按钮事件
+        api.addEventListener({
+            name: 'keyback'
+        }, function (ret, err) {
+            closeOnKeyBack();
+        });
+        var backButtonPress = 0;
+	    function closeOnKeyBack() {
+	        backButtonPress++;
+	        if (backButtonPress > 1) {
+	            closeApp();
+	        } else {
+	            api.toast({msg: '再按一次退出应用'});
+	        }
+	        setTimeout(function () {
+	            backButtonPress = 0;
+	        }, 1000);
+	    }
+	}
+	
+	function openmap(){
+			openNewWindows('map','shuju.html');
+			
+		}
+	
+    /***********************点击登录**********************************/ 
+   /* document.getElementById("loginButton").onclick= function (){
+        var tel = document.getElementById('phone').value;
+        var code = document.getElementById('phone_pass').value;
+        var obj = {};
+	    if(!checkMobileNum(tel)){
+            toast("请输入正确的手机号!");
+            return;
+        }
+		obj.mobile = tel;
+		
+        if(isBlack(code)){
+            toast("请输入密码!");
+            return;
+        }
+        obj.code = code;
+        ajaxGetUser(userLogin,obj,function(ret,err) {
+			if (ret && ret.code == 10000) {
+				cleanDb(function(){
+					var locationObj = $api.getStorage("locationObj");
+					if (isBlack(locationObj)) {
+						var locationObj = {city:'北京市',longitude:116.33059945454566,latitude:39.9713567426658,province:"北京市"};
+					}
+					ajaxGetUser(myPosition,locationObj,function(rets,err){
+		            	if (rets.code == 10000) {
+		            		api.execScript({
+								name:rootWindowName,
+					            script: 'getMyInterest()'
+					       	})
+							api.execScript({
+								name:rootWindowName,
+								frameName:"user",
+					            script: 'apiready()'
+					       	})
+							setTimeout(function(){
+								openNewWindow(rootWindowName,"../../index.html");
+							},200)
+							setTimeout(function(){
+								closeWin();
+							},600);
+		            	}
+		            })
+				});
+			}else{
+				toast(ret.Message);
+			}
+        })
+    };*/
+    /***********************点击登录**********************************/
+   
+   
+   
+    /*************点击获取验证码***********/
+//	var  flag = true;
+//	function getCode(){
+//		if(!flag){
+//          return;
+//      }
+//		var tel = document.getElementById('phone').value;
+//		if(!checkMobileNum(tel)){
+//          toast("手机号码不正确");
+//          return;
+//      }
+//		var obj = {
+//			mobile : tel
+//		}
+//		flag = false;  
+//		setTime();
+//		ajaxGetUser(createAuthCode,obj,function(ret,err) {
+//          if (ret && ret.code == 10000) {
+//          	
+//          }else if(ret && !ret.success){
+//          	toast(ret.Message);
+//          }
+//      })
+//	}
+	
+	 /*******************倒计时****************************/
+    //点击获取验证码，开始倒计时60s
+    
+    function settimeout(){
+    	var time;
+    	var code = document.querySelector('#sms');
+    	code.style.background = '#999';
+    	time = time || 60;
+    	code.innerHTML = time +'s';
+    	
+    	var interval = setInterval(function(){
+    		if(time>0){
+    			time--;
+    			code.innerHTML = time +'s';
+    		}else{
+    			code.style.background = "#ff9900";
+    			code.innerHTML = '获取验证码';
+    			clearInterval(interval);
+    		}
+    	},100)
+    }
+   
+</script>
+</html>
