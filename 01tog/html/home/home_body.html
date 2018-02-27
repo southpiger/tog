@@ -138,11 +138,10 @@
 					            activeColor:"#00BFFF"
 					        }
 					    },
-		//			    placeholderImg: 'widget://res/slide1.jpg',
+					    placeholderImg: 'widget://image/cbd.jpg',
 					    contentMode: 'scaleToFill',
 					    interval: 3,
 					    fixedOn: api.frameName,
-					    loop: true,
 					    fixed: false
 					}, function(ret, err) {
 					    if (ret) {
@@ -153,9 +152,6 @@
 							    index：0                       //数字类型；当前图片的索引
 							}*/
 							if(ret.eventType=='click'){
-								alert(ret.index);
-								alert(JSON.stringify(arr1))
-								alert(JSON.stringify(arr2))
 								for(var i=0;i<arr2.length;i++){
 									openBrower(arr2[ret.index]);
 								}
