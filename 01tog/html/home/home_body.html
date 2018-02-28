@@ -97,7 +97,7 @@
 		            </li>
 		        </ul> 
 			</div>
-			<img src="" id="tom" />
+			
 		</div>
 	</body>
 	<script src="../../script/mui.min.js"></script>
@@ -110,7 +110,7 @@
 			var tom = $api.byId('tom');
 			var UIScrollPicture = api.require('UIScrollPicture');
 			api.ajax({
-			    url: 'http://api.jisuapi.com/news/get?channel=头条&start=0&num=1&appkey=61bdbb002f1edc13',
+			    url: 'http://api.jisuapi.com/news/get?channel=头条&start=0&num=3&appkey=61bdbb002f1edc13',
 			    method: 'get'
 			    
 			}, function(ret, err) {
@@ -129,11 +129,11 @@
 								
 							    if(ret.status==true){
 							    	var mt = ret.url;
-							    	$api.attr(tom,'src',mt)
+							    	
 								    arr1.push(mt);
 							    }else{
-							    	var uls = ret.url;
-							    	arr1.push(uls);
+							    	var mt = ret.url;
+							    	arr1.push(mt);
 							    }
 							});	
 			        	}
@@ -141,7 +141,7 @@
 			        	arr2.push(ak.url);
 			        }
 			        
-			        /*UIScrollPicture.open({
+			        UIScrollPicture.open({
 					    rect: {
 					        x: 0,
 					        y: 0,
@@ -164,7 +164,7 @@
 					    fixedOn: api.frameName,
 					    fixed: false
 					}, function(ret, err) {
-					    if (ret) {*/
+					    if (ret) {
 		//			        alert(JSON.stringify(ret));
 					       /* {
 							    status: true,                  //布尔型；true||false
@@ -172,13 +172,13 @@
 							    index：0                       //数字类型；当前图片的索引
 							}*/
 							
-							/*if(ret.eventType=='click'){
+							if(ret.eventType=='click'){
 								for(var i=0;i<arr2.length;i++){
 									openBrower(arr2[ret.index]);
 								}
 							}
 					    }
-					});*/
+					});
 			        
 			    } else {
 			        api.alert({ msg: JSON.stringify(err) });
