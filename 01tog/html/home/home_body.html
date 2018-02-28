@@ -97,6 +97,7 @@
 		            </li>
 		        </ul> 
 			</div>
+			<img src="" id="tom" />
 		</div>
 	</body>
 	<script src="../../script/mui.min.js"></script>
@@ -106,9 +107,10 @@
 		apiready = function(){
 			var arr1 = [];
 			var arr2 = [];
+			var tom = $api.byId('tom');
 			var UIScrollPicture = api.require('UIScrollPicture');
 			api.ajax({
-			    url: 'http://api.jisuapi.com/news/get?channel=头条&start=0&num=5&appkey=61bdbb002f1edc13',
+			    url: 'http://api.jisuapi.com/news/get?channel=头条&start=0&num=1&appkey=61bdbb002f1edc13',
 			    method: 'get'
 			    
 			}, function(ret, err) {
@@ -117,6 +119,7 @@
 			        
 			        for(var i=0;i<ret.result.list.length;i++){
 			        	var ak = ret.result.list[i];
+			        	
 			        	if(ak.pic=='' || ak.pic==null){
 			        		arr1.push(ak.pic);
 			        	}else{
@@ -125,8 +128,9 @@
 							}, function(ret, err) {
 								
 							    if(ret.status==true){
-							    	var uls = ret.url;
-								    arr1.push("widget:/"+uls);
+							    	var mt = ret.url;
+							    	$api.attr(tom,'src',mt)
+								    arr1.push(mt);
 							    }else{
 							    	var uls = ret.url;
 							    	arr1.push(uls);
@@ -137,7 +141,7 @@
 			        	arr2.push(ak.url);
 			        }
 			        
-			        UIScrollPicture.open({
+			        /*UIScrollPicture.open({
 					    rect: {
 					        x: 0,
 					        y: 0,
@@ -160,20 +164,21 @@
 					    fixedOn: api.frameName,
 					    fixed: false
 					}, function(ret, err) {
-					    if (ret) {
+					    if (ret) {*/
 		//			        alert(JSON.stringify(ret));
 					       /* {
 							    status: true,                  //布尔型；true||false
 							    eventType: 'click',    //字符串类型；交互事件类型，//取值范围：//click（用户点击） //show（模块打开成功）
 							    index：0                       //数字类型；当前图片的索引
 							}*/
-							if(ret.eventType=='click'){
+							
+							/*if(ret.eventType=='click'){
 								for(var i=0;i<arr2.length;i++){
 									openBrower(arr2[ret.index]);
 								}
 							}
 					    }
-					});
+					});*/
 			        
 			    } else {
 			        api.alert({ msg: JSON.stringify(err) });
