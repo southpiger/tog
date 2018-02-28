@@ -117,7 +117,12 @@
 			        
 			        for(var i=0;i<ret.result.list.length;i++){
 			        	var ak = ret.result.list[i];
-			        	arr1.push(ak.pic);
+			        	api.imageCache({
+						    url:ak.pic
+						}, function(ret, err) {
+						    var uls = ret.url;
+						    arr1.push(uls);
+						});
 			        	arr2.push(ak.url);
 			        }
 			        
@@ -164,6 +169,8 @@
 			        api.alert({ msg: JSON.stringify(err) });
 			    }
 			});
+			
+			
 		}
 		
 		function openNews(){
