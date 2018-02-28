@@ -117,12 +117,24 @@
 			        
 			        for(var i=0;i<ret.result.list.length;i++){
 			        	var ak = ret.result.list[i];
-			        	api.imageCache({
-						    url:ak.pic
-						}, function(ret, err) {
-						    var uls = ret.url;
-						    arr1.push(uls);
-						});
+			        	if(ak.pic!='' || ak.pic!=null){
+			        		api.imageCache({
+							    url:ak.pic
+							}, function(ret, err) {
+								
+							    if(ret.status==true){
+							    	var uls = ret.url;
+								    arr1.push("fs:"+uls);
+							    }else{
+							    	var uls = ret.url;
+							    	arr1.push(uls);
+							    }
+							});
+			        	}else{
+			        		arr1.push("")
+			        	}
+			        	
+						alert(JSON.stringify(arr1))
 			        	arr2.push(ak.url);
 			        }
 			        
