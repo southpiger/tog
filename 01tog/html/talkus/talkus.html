@@ -23,6 +23,15 @@
 				border-radius: 5px;
 				padding: 10px;
 			}
+			.tom{
+				text-align: center;
+			}
+			.tom span{
+				border: 1px solid #f4c4f4;
+				padding:0 4px;
+				line-height: 24px;
+				font-size: 18px;
+			}
 		</style>
 	</head>
 	<body>
@@ -31,17 +40,26 @@
 				<textarea placeholder="请输入要说的话"></textarea>
 				<div>提交</div>
 			</div>
-			<ul class="show">
-				<li></li>
-				<li></li>
-				<li></li>
-			</ul>
+			<div>
+				<p class="tom"><span onclick="aps()">查找</span></p>
+			</div>
 		</div>
 	</body>
 	<script src="../../script/api.js"></script>
 	<script>
 		apiready = function(){
 			
+			
+		}
+		function aps(){
+			var selectFile = api.require('selectFile');
+			selectFile.open(function(ret, err){
+			    if(ret.status){
+			        alert(JSON.stringify(ret.path));
+			    }else{
+			        alert('选择文件不存在');
+			    }
+			});
 		}
 	</script>
 </html>

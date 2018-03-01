@@ -140,11 +140,11 @@
 			}, function() {
 			    //下拉刷新被触发，自动进入加载状态，使用 api.refreshHeaderLoadDone() 手动结束加载中状态
 			    //下拉刷新被触发，使用 api.refreshHeaderLoadDone() 结束加载中状态  
-			    alert('1');
+			    
 			    api.addEventListener({
 			        name: 'shake'
-			    }, function(ret, err) {
-			        setTimeout("api.refreshHeaderLoadDone()",5000)
+			    }, function(ret, err){
+			        setTimeout("api.refreshHeaderLoadDone()",2000)
 			    });
 			});
 		}
