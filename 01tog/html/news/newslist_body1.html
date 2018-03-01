@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    	<meta name="apple-mobile-web-app-capable" content="yes">
+    	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<title>新闻列表</title>
+		<link rel="stylesheet" href="../../css/api.css" />
+		<link rel="stylesheet" href="../../css/mui.min.css" />
+		<script src="../../script/common.js"></script>
+		<style type="text/css">
+			*{
+				box-sizing: content-box;
+				-webkit-box-sizing: content-box;
+				background-color: #fff;
+			}
+			.clearfix:before{
+				content: '';
+				height: 0;
+				line-height: 0;
+				display: block;
+				visibility: hidden;
+				clear: both;
+			}
+			
+			
+			.mui-table-view:before{
+				content: '';
+				height: 0;
+				line-height: 0;
+			}
+			.mui-table-view-cell:after{
+				left: 0;
+			}
+			.mui-table-view-cell>a:not(.mui-btn).mui-active{
+				background-color: #fff;
+			}
+			.mui-media-body{
+				line-height: 18px;
+			}
+			.mui-media-body .title_name{
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				font-size: 16px;
+				color: #363636;
+				display: inline-block;
+				width: 100%;
+			}
+			.mui-media-body .mui-ellipsis{
+				font-size: 12px;
+				color: #999;
+			}
+			.spg{
+				color: dodgerblue;
+				
+			}
+		</style>
+	</head>
+	<body>
+		<div class="newslist_m">
+			<div class="content clearfix">
+				<ul class="mui-table-view" id="newslists">
+
+				</ul>
+			</div>
+		</div>
+	</body>
+	<script type="text/html" id="list">
+		<%for(var i=0;i<msg.length;i++){%>
+			<li class="mui-table-view-cell mui-media" onclick="openNewsInfo(this)">
+				<a href="javascript:;">
+					<img class="mui-media-object mui-pull-left" src="<%=msg[i].pic%>">
+					<div class="mui-media-body">
+						<span class="title_name"><%=msg[i].title%></span>
+						<p class='mui-ellipsis'><%=msg[i].src%>&nbsp;&nbsp;<%=msg[i].time%></p>
+					</div>
+				</a>
+			</li>
+		<%}%>
+	</script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/mui.min.js"></script>
+	<script src="../../script/jquery-3.2.1.min.js"></script>
+	<script src="../../script/template-native.js"></script>
+	<script src="../../script/apiCloud.js"></script>
+	<script>
+
+		apiready = function(){
+			
+			aa();
+			var pm = api.pageParam;
+			var ht = pm.tm;
+			alert(JSON.stringify(ht))
+			
+			api.ajax({
+			    url: 'http://api.jisuapi.com/news/get?channel='+ht+'&start=0&num=10&appkey=61bdbb002f1edc13',
+			    method: 'get'
+			}, function(ret,err){
+				if(ret){
+					
+					var data = {msg:ret.result.list};	
+					var html = template('list',data);
+			        document.querySelector("#newslists").innerHTML = html;
+				}else{
+					alert(JSON.stringify(err.msg))
+				}
+			})
+		}
+
+		function openNewsInfo(self){
+			var parms = {};
+			openNewWindows('newsinfo','./newsInfo.html',parms);
+		}
+
+		function aa(){
+			api.setCustomRefreshHeaderInfo({
+			    bgColor: '#fff',
+			    isScale: true,
+			    /*image: {
+			        pull: [
+			            'widget://image/refresh/dropdown0.png',
+			            'widget://image/refresh/dropdown1.png',
+			            'widget://image/refresh/dropdown2.png',
+			            'widget://image/refresh/dropdown3.png',
+			            'widget://image/refresh/dropdown4.png',
+			            'widget://image/refresh/dropdown5.png',
+			            'widget://image/refresh/dropdown6.png'
+			        ],
+			        load: [
+			            'widget://image/refresh/loading0.png',
+			            'widget://image/refresh/loading1.png',
+			            'widget://image/refresh/loading2.png',
+			            'widget://image/refresh/loading3.png',
+			            'widget://image/refresh/loading4.png'
+			        ]
+			    }*/
+			}, function() {
+			    //下拉刷新被触发，自动进入加载状态，使用 api.refreshHeaderLoadDone() 手动结束加载中状态
+			    //下拉刷新被触发，使用 api.refreshHeaderLoadDone() 结束加载中状态  
+			    
+			    api.addEventListener({
+			        name: 'shake'
+			    }, function(ret, err){
+			        setTimeout("api.refreshHeaderLoadDone()",2000)
+			    });
+			});
+		}
+		function openBrower(urls){
+			var browser = api.require('webBrowser');
+			browser.open({
+			    url: urls
+			});
+		}
+		
+	</script>
+</html>

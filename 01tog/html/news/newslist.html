@@ -120,63 +120,85 @@
 					var data = {msg:ret.result};	
 					var html = template('newslist',data);
 			        document.querySelector(".newsnav").innerHTML = html;
-			        for(var j=0;j<ret.result.length;j++){
-			        	$(frameArr).push({
-					        name: 'frame'+j,
-					        url: 'newslist.html'
-					    })
-			        }
+			        
 				}else{
 					alert(JSON.stringify(err.msg))
 				}
-				lis = $api.domAll('li');
-				alert(JSON.stringify(lis));
-				if(tk()){
-					tk();
-				}else{
+					lis = $api.domAll('li');
 					$api.addCls(lis[0],'spg');
 					var tom = $api.html($api.dom('.spg'));
 			        alert(tom)
 			        var pm = {tm:tom};
 //			        initOpen(pm);
-			        api.openFrameGroup({
-					    name: 'newslist_body',
+			        
+			        var frames = []; // 选择所有匹配的DOM元素
+					for (var i = 0,len = lis.length; i < len; i++) {
+					        
+					        var url = './newslist_body.html';
+					        frames.push( { 
+					            name: 'frame'+i, 
+					            url: url,
+					            pageParam:pm
+					        } )
+					        $(lis[i]).click(function(){
+					        	tk(i);
+					        })
+					        
+					}
+					
+					api.openFrameGroup({ // 打开 frame 组
+					    name: 'group112',
+					    scrollEnabled: false,
 					    rect: {
 					        x: 0,
 					        y: head_h,
-					        w: api.frameWidth,
-					        h: api.winHeight-head_h-bottom_h
+					        w: api.winWidth,
+					        h: api.winHeight-head_h
 					    },
-					    frames: [{
-					        name: 'frame1',
-					        url: 'newslist_body.html',
-					        bgColor: '#fff'
-					    }, {
-					        name: 'frame2',
-					        url: 'frame2.html',
-					        bgColor: '#fff'
-					    }]
-					}, function(ret, err) {
-					    var index = ret.index;
+					    index: 0,
+					    frames: frames
+					}, function (ret, err) {
+					
 					});
-//			        openNewFrames(api.winName+'_body','./'+api.winName+'_body.html',pm,head_h,bottom_h)
-			        alert(JSON.stringify(pm))
-				}
+				tk(i)
 			});
-			tk();
+			
 		}
 		
-		function tk(){
-			for (var i=0;i<lis.length;i++){
+		function tk(i){
+//			for (var i=0;i<lis.length;i++){
 	        	$(lis[i]).click(function(){
 	        		$(lis).removeClass('spg');
 	        		$(this).addClass('spg');
 	        		var tom = $api.html($api.dom('.spg'));
 			        var pm = {tm:tom};
-			        openNewFrames(api.winName+'_body','./'+api.winName+'_body.html',pm,head_h,bottom_h);
-			        alert(JSON.stringify(pm));
+			        var frames = []; // 选择所有匹配的DOM元素
+					for (var i = 0,len = lis.length; i < len; i++) {
+					        // 判断是否登录
+					        var url = './newslist_body.html';
+					        frames.push( { 
+					            name: 'frame'+i, 
+					            url: url,
+					            pageParam:pm
+					        } )
+					}
+					
+					api.openFrameGroup({ // 打开 frame 组
+					    name: 'group111',
+					    scrollEnabled: false,
+					    rect: {
+					        x: 0,
+					        y: head_h,
+					        w: api.winWidth,
+					        h: api.winHeight-head_h
+					    },
+					    index: 0,
+					    frames: frames
+					}, function (ret, err) {
+					
+					});
 	        	})
-			}
+//			}
 		}
 	</script>
 </html>
