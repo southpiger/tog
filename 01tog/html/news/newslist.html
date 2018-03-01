@@ -51,20 +51,24 @@
 				line-height: 48px;
 				height: 48px;
 				background-color: #f6f6f6;
+				
 			}
 			.newsnav{
+				box-sizing: border-box;
 				height: 48px;
-				line-height: 48px;
+				float: left;
 				border-bottom: 6px solid #F6F6F6;
 				overflow-x: scroll;
 			}
 			.newsnav li{
+				
+				line-height: 48px;
 				float: left;
-				display: inline;
-				width: 25%;
+				box-sizing: border-box;
+				/*display: inline-block;*/
+				width: 20%;
 				text-align: center;
 				color: #333;
-				overflow-x: scroll;
 			}
 			.mui-table-view:before{
 				content: '';
@@ -92,6 +96,10 @@
 			.mui-media-body .mui-ellipsis{
 				font-size: 12px;
 				color: #999;
+			}
+			.spg{
+				color: dodgerblue;
+				
 			}
 		</style>
 	</head>
@@ -141,13 +149,9 @@
 	</body>
 	
 	<script id="newslist" type="text/html">
-		
-		<li>头条</li>
-		<li>新闻</li>
-		<li>财经</li>
-		<li>体育</li>
-		<li>娱乐</li>
-		<li>军事</li>
+		<%for(var i=0;i<msg.length;i++){%>
+			<li><%=msg[i]%></li>
+		<%}%>
 	</script>
 	<script type="text/javascript" src="../../script/api.js"></script>
 	<script type="text/javascript" src="../../script/mui.min.js"></script>
@@ -166,15 +170,23 @@
 		apiready = function(){
 			body_h= api.winHeight;
 			
-			ajaxGetUser('./news.json',{},function(ret){
-//				alert(ret.code)
+			api.ajax({
+			    url: 'http://api.jisuapi.com/news/channel?appkey=61bdbb002f1edc13',
+			    method: 'get'
+			}, function(ret,err){
+				if(ret){
+					var data = {msg:ret.result};	
+					var html = template('newslist',data);
+			        document.querySelector(".newsnav").innerHTML = html;
+				}
 			})
+			aa();
 		}
 			
 			var ts = document.querySelector('.title_name');
 			var ins = document.querySelector('.introduce');
 		
-			$.ajax({
+			/*$.ajax({
 			   url: "news.json",//json文件位置
 			   type: "GET",//请求方式为get
 			   dataType: "json", //返回数据格式为json
@@ -187,15 +199,8 @@
 			       		$(ins[i]).html(ak[i].introduce);
 			       }
 			   }
-			})
-		
-		window.onload = function(){
-			var data = {};	
-			var html = template('newslist',data);
-//			var html1 = template('scriptDiv2',data);
-	        document.querySelector(".newsnav").innerHTML = html;
-		}
-		
+			})*/
+
 		function openlocal(){
 			
 			openNewWindows('domestic','./domestic.html')
@@ -215,10 +220,10 @@
 			var arr_h = arr[i];
 			
 			var browser = api.require('webBrowser');
-			browser.open({
+			/*browser.open({
 			    url: 'http://www.baidu.com'
-			});
-//			openNewWindows('newsinfo','./newsInfo.html',{name:k_h,source:arr_h,info:info_h});
+			});*/
+			openNewWindows('newsinfo','./newsInfo.html',{name:k_h,source:arr_h,info:info_h});
 		}
 
 		//ajax函数
@@ -248,6 +253,40 @@
 //			var html1 = template('scriptDiv2',data);
 	        document.querySelector(".newsnav").innerHTML = html;
 //	        document.querySelector("#local span").innerHTML = html1;
+		}
+		
+		function aa(){
+			api.setCustomRefreshHeaderInfo({
+			    bgColor: '#fff',
+			    isScale: true,
+			    /*image: {
+			        pull: [
+			            'widget://image/refresh/dropdown0.png',
+			            'widget://image/refresh/dropdown1.png',
+			            'widget://image/refresh/dropdown2.png',
+			            'widget://image/refresh/dropdown3.png',
+			            'widget://image/refresh/dropdown4.png',
+			            'widget://image/refresh/dropdown5.png',
+			            'widget://image/refresh/dropdown6.png'
+			        ],
+			        load: [
+			            'widget://image/refresh/loading0.png',
+			            'widget://image/refresh/loading1.png',
+			            'widget://image/refresh/loading2.png',
+			            'widget://image/refresh/loading3.png',
+			            'widget://image/refresh/loading4.png'
+			        ]
+			    }*/
+			}, function() {
+			    //下拉刷新被触发，自动进入加载状态，使用 api.refreshHeaderLoadDone() 手动结束加载中状态
+			    //下拉刷新被触发，使用 api.refreshHeaderLoadDone() 结束加载中状态  
+			    alert('1');
+			    api.addEventListener({
+			        name: 'shake'
+			    }, function(ret, err) {
+			        api.refreshHeaderLoadDone();
+			    });
+			});
 		}
 	</script>
 </html>

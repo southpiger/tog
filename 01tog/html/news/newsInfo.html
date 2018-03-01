@@ -55,6 +55,12 @@
 				font-size: 16px;
 				color: #666;
 			}
+			
+			.foot li{
+				line-height: 36px;
+				float: left;
+				padding: 0 20px;
+			}
 		</style>
 	</head>
 	<body>
@@ -70,15 +76,29 @@
 				<!--<p class="source">来源：<em></em></p>-->
 				<div class="newstext"></div>
 			</div>
+			<div class="foot">
+				<ul>
+					<li>1</li>
+					<li>2</li>
+					<li>3</li>
+					<li>4</li>
+					<li>5</li>
+					<li>6</li>
+					<li>1</li>
+					<li>2</li>
+					<li>3</li>
+					<li>4</li>
+					<li>5</li>
+					<li>6</li>
+				</ul>
+			</div>
 		</div>
 	</body>
 	<script src="../../script/api.js"></script>
 	<script>
 		apiready = function(){
 			var browser = api.require('webBrowser');
-			browser.open({
-			    url: 'http://www.baidu.com'
-			});
+			
 			
 			var p1 = api.pageParam.name;
 			var p2 = api.pageParam.info;
