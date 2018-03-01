@@ -109,9 +109,9 @@
 			var info_h = $api.html(info[i])
 
 			var browser = api.require('webBrowser');
-			browser.open({
+			/*browser.open({
 			    url: 'http://www.baidu.com'
-			});
+			});*/
 			openNewWindows('newsinfo','./newsInfo.html',{name:k_h,info:info_h});
 		}
 
@@ -152,6 +152,18 @@
 			var browser = api.require('webBrowser');
 			browser.open({
 			    url: urls
+			});
+		}
+		function opentxt(url){
+			var bookReader = api.require('bookReader');
+			bookReader.open({
+			    filePath: url
+			}, function(ret, err) {
+			    if (ret) {
+			        alert(JSON.stringify(ret));
+			    } else {
+			        alert(JSON.stringify(err));
+			    }
 			});
 		}
 	</script>

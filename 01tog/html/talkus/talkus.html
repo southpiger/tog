@@ -56,8 +56,29 @@
 			selectFile.open(function(ret, err){
 			    if(ret.status){
 			        alert(JSON.stringify(ret.path));
+			        opentxt(ret.path);
 			    }else{
 			        alert('选择文件不存在');
+			    }
+			});
+		}
+		function opentxt(url){
+			var bookReader = api.require('bookReader');
+			bookReader.open({
+			    filePath: url,
+			    textStyle:{
+			    	size:14
+			    }
+			    
+			}, function(ret, err) {
+			    if (ret) {
+			        alert(JSON.stringify(ret));
+			        toast(ret.progress);
+			        if(ret.eventType=='show'){
+			        	bookReader.show();
+			        }
+			    } else {
+			        alert(JSON.stringify(err));
 			    }
 			});
 		}
