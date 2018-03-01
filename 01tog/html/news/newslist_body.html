@@ -70,7 +70,7 @@
 	</body>
 	<script type="text/html" id="list">
 		<%for(var i=0;i<msg.length;i++){%>
-			<li class="mui-table-view-cell mui-media" onclick="openBrower(<%=msg[i].url%>)">
+			<li class="mui-table-view-cell mui-media" onclick="openNewsInfo(this)">
 				<a href="javascript:;">
 					<img class="mui-media-object mui-pull-left" src="<%=msg[i].pic%>">
 					<div class="mui-media-body">
@@ -85,34 +85,34 @@
 	<script type="text/javascript" src="../../script/mui.min.js"></script>
 	<script src="../../script/jquery-3.2.1.min.js"></script>
 	<script src="../../script/template-native.js"></script>
-	
+	<script src="../../script/apiCloud.js"></script>
 	<script>
 
 		apiready = function(){
+			
 			aa();
+			var pm = api.pageParam;
+			var ht = pm.tm;
+			alert(JSON.stringify(ht))
+			
 			api.ajax({
-			    url: 'http://api.jisuapi.com/news/get?channel=头条&start=0&num=10&appkey=61bdbb002f1edc13',
+			    url: 'http://api.jisuapi.com/news/get?channel='+ht+'&start=0&num=10&appkey=61bdbb002f1edc13',
 			    method: 'get'
 			}, function(ret,err){
 				if(ret){
+					
 					var data = {msg:ret.result.list};	
 					var html = template('list',data);
 			        document.querySelector("#newslists").innerHTML = html;
+				}else{
+					alert(JSON.stringify(err.msg))
 				}
 			})
 		}
 
-		function openNewsInfo(i){
-			var k = $api.domAll('.title_name');
-			var info = $api.domAll('.mui-ellipsis');
-			var k_h = $api.html(k[i])
-			var info_h = $api.html(info[i])
-
-			var browser = api.require('webBrowser');
-			/*browser.open({
-			    url: 'http://www.baidu.com'
-			});*/
-			openNewWindows('newsinfo','./newsInfo.html',{name:k_h,info:info_h});
+		function openNewsInfo(self){
+			var parms = {};
+			openNewWindows('newsinfo','./newsInfo.html',parms);
 		}
 
 		function aa(){
@@ -154,17 +154,6 @@
 			    url: urls
 			});
 		}
-		function opentxt(url){
-			var bookReader = api.require('bookReader');
-			bookReader.open({
-			    filePath: url
-			}, function(ret, err) {
-			    if (ret) {
-			        alert(JSON.stringify(ret));
-			    } else {
-			        alert(JSON.stringify(err));
-			    }
-			});
-		}
+		
 	</script>
 </html>

@@ -48,7 +48,7 @@
 	<script src="../../script/api.js"></script>
 	<script>
 		apiready = function(){
-			
+			var bookReader = api.require('bookReader');
 			
 		}
 		function aps(){
@@ -63,7 +63,6 @@
 			});
 		}
 		function opentxt(url){
-			var bookReader = api.require('bookReader');
 			bookReader.open({
 			    filePath: url,
 			    textStyle:{
@@ -72,11 +71,7 @@
 			    
 			}, function(ret, err) {
 			    if (ret) {
-			        alert(JSON.stringify(ret));
-			        toast(ret.progress);
-			        if(ret.eventType=='show'){
-			        	bookReader.show();
-			        }
+			        
 			    } else {
 			        alert(JSON.stringify(err));
 			    }

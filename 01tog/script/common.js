@@ -38,5 +38,5 @@ function initOpen(pageParam){
 	head.style.display = "block";
 	head_h = head.offsetHeight;
 	bottom_h=0;
-	openNewFrames(api.winName+'_body','./'+api.winName+'_body.html',{},head_h,bottom_h);
+	openNewFrames(api.winName+'_body','./'+api.winName+'_body.html',pageParam,head_h,bottom_h);
 }

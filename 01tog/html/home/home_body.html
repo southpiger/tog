@@ -115,7 +115,7 @@
 			    
 			}, function(ret, err) {
 			    if (ret) {
-			        api.alert({ msg: JSON.stringify(ret.result.list) });
+//			        api.alert({ msg: JSON.stringify(ret.result.list) });
 			        
 			        for(var i=0;i<ret.result.list.length;i++){
 			        	var ak = ret.result.list[i];
@@ -180,7 +180,7 @@
 					});
 			        
 			    } else {
-			        api.alert({ msg: JSON.stringify(err) });
+			        api.alert({ msg: JSON.stringify(err.msg) });
 			    }
 			});
 		}
