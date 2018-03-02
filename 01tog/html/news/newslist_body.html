@@ -14,7 +14,7 @@
 			*{
 				box-sizing: content-box;
 				-webkit-box-sizing: content-box;
-				
+				background-color: #fff;
 			}
 			
 			.clearfix:before{
@@ -48,7 +48,7 @@
 				font-size: 16px;
 				color: #363636;
 				display: inline-block;
-				width: 100%;
+				width: 100%;            
 			}
 			.mui-media-body .mui-ellipsis{
 				font-size: 12px;
@@ -56,8 +56,13 @@
 			}
 			.spg{
 				color: dodgerblue;
-				
 			}
+			.more{
+				text-align: center;
+				line-height: 36px;
+			}
+			
+			
 		</style>
 	</head>
 	<body>
@@ -68,6 +73,7 @@
 				<ul class="mui-table-view" id="newslists">
 
 				</ul>
+				<p class="more" onclick="morenews()"><span>上拉加载更多</span></p>
 			</div>
 			
 		</div>
@@ -81,12 +87,12 @@
 						<%if(msg[i].pic==''){%>
 							<img class="mui-media-object mui-pull-left" src="../../image/404person.png">
 						<%}else{%>
-							<img class="mui-media-object mui-pull-left" src="<%=msg[i].pic%>">
+							<img class="mui-media-object mui-pull-left" src="<%=pic[i]%>">
 						<%}%>
 						
 					<div class="mui-media-body">
 						<span class="title_name"><%=msg[i].title%></span>
-						<p class='mui-ellipsis'><%=msg[i].src%>&nbsp;&nbsp;<%=msg[i].time%></p>
+						<p class='mui-ellipsis'><%=msg[i].src%>&nbsp;&nbsp;<%=msg[i].time%>&nbsp;&nbsp;<%=pic[i]%></p>
 					</div>
 				</a>
 			</li>
@@ -99,7 +105,7 @@
 	<script src="../../script/apiCloud.js"></script>
 	
 	<script>
-		var lt,ht;
+		var lt,ht,td=0;
 		
 		apiready = function(){
 			bb()
@@ -107,6 +113,7 @@
 			ht = api.pageParam.tm;
 			
 			aa(ht);
+			morenews();
 			/*api.ajax({
 			    url: 'http://api.jisuapi.com/news/get?channel='+ht+'&start=0&num=10&appkey=61bdbb002f1edc13',
 			    method: 'get'
@@ -126,8 +133,9 @@
 			var parms = {tk:lt};
 			openNewWindows('newsinfo','./newsInfo.html',parms);
 		}
-
+		
 		function aa(ht){
+			var dd=[],spg;
 			api.setCustomRefreshHeaderInfo({
 			    bgColor: '#fff',
 			    isScale: true,
@@ -154,17 +162,23 @@
 			    //下拉刷新被触发，自动进入加载状态，使用 api.refreshHeaderLoadDone() 手动结束加载中状态
 			    //下拉刷新被触发，使用 api.refreshHeaderLoadDone() 结束加载中状态  
 			    api.ajax({
-				    url: 'http://api.jisuapi.com/news/get?channel='+ht+'&start=0&num=10&appkey=61bdbb002f1edc13',
+				    url: 'http://api.jisuapi.com/news/get?channel='+ht+'&start=0&num=3&appkey=61bdbb002f1edc13',
 				    method: 'get'
 				}, function(ret, err) {
+				    
 				    if (ret) {
-				        var data = {msg:ret.result.list};	
-						var html = template('list',data);
-					    document.querySelector("#newslists").innerHTML = html;
+				    	spg = ret.result.list;
+				    	sdk(spg);
+				    	var data = {msg:spg,pic:dd};
+					    var html = template('list',data);
+						document.querySelector("#newslists").innerHTML = html;
+						setTimeout("api.refreshHeaderLoadDone();",1200);
+				    }else{
+				    	alert(JSON.stringify(err.msg));
 				    }
-				    setTimeout("api.refreshHeaderLoadDone();",1200);
 				});
 			}); 
+			
 			    api.addEventListener({
 			        name: 'shake'
 			    }, function(ret, err){
@@ -180,8 +194,37 @@
 			    url: urls
 			});
 		}
-		
-		
-		
+		function morenews(){
+			api.addEventListener({
+			        name: 'scrolltobottom'
+			}, function(ret, err){
+				
+		        td+=1;
+				api.ajax({
+				    url: 'http://api.jisuapi.com/news/get?channel='+ht+'&start='+td+'&num=1&appkey=61bdbb002f1edc13',
+				    method: 'get'
+				}, function(ret, err) {
+				    if (ret) {
+				        var data = {msg:ret.result.list};	
+						var html = template('list',data);
+					    document.querySelector("#newslists").innerHTML += html;
+				    }else{
+				    	alert(JSON.stringify(err.msg))
+				    }
+				});
+		    });
+			
+		}
+		function sdk(pics){
+			var dd=[];
+			for(var i=0;i<pics.length;i++){    		
+	    		api.imageCache({
+					url:pics[i].pic
+				}, function(ret, err) {	
+				    $(dd).push(ret.url);
+				});
+	    	}
+			return dd;
+		}
 	</script>
 </html>
