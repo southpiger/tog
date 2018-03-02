@@ -14,8 +14,9 @@
 			*{
 				box-sizing: content-box;
 				-webkit-box-sizing: content-box;
-				background-color: #fff;
+				
 			}
+			
 			.clearfix:before{
 				content: '';
 				height: 0;
@@ -60,19 +61,29 @@
 		</style>
 	</head>
 	<body>
+		
 		<div class="newslist_m">
+			<div class="bggray"></div>
 			<div class="content clearfix">
 				<ul class="mui-table-view" id="newslists">
 
 				</ul>
 			</div>
+			
 		</div>
 	</body>
+	
 	<script type="text/html" id="list">
 		<%for(var i=0;i<msg.length;i++){%>
 			<li class="mui-table-view-cell mui-media" onclick="openNewsInfo(this)">
 				<a href="javascript:;">
-					<img class="mui-media-object mui-pull-left" src="<%=msg[i].pic%>">
+					 
+						<%if(msg[i].pic==''){%>
+							<img class="mui-media-object mui-pull-left" src="../../image/404person.png">
+						<%}else{%>
+							<img class="mui-media-object mui-pull-left" src="<%=msg[i].pic%>">
+						<%}%>
+						
 					<div class="mui-media-body">
 						<span class="title_name"><%=msg[i].title%></span>
 						<p class='mui-ellipsis'><%=msg[i].src%>&nbsp;&nbsp;<%=msg[i].time%></p>
@@ -86,36 +97,37 @@
 	<script src="../../script/jquery-3.2.1.min.js"></script>
 	<script src="../../script/template-native.js"></script>
 	<script src="../../script/apiCloud.js"></script>
+	
 	<script>
-
+		var lt,ht;
+		
 		apiready = function(){
+			bb()
+//			location.reload();
+			ht = api.pageParam.tm;
 			
-			aa();
-			var pm = api.pageParam;
-			var ht = pm.tm;
-			alert(JSON.stringify(ht))
-			
-			api.ajax({
+			aa(ht);
+			/*api.ajax({
 			    url: 'http://api.jisuapi.com/news/get?channel='+ht+'&start=0&num=10&appkey=61bdbb002f1edc13',
 			    method: 'get'
-			}, function(ret,err){
-				if(ret){
-					
-					var data = {msg:ret.result.list};	
+			}, function(ret, err) {
+			    if (ret) {
+			    	
+			    	lt=ret.result.list.url;
+			        var data = {msg:ret.result.list};	
 					var html = template('list',data);
-			        document.querySelector("#newslists").innerHTML = html;
-				}else{
-					alert(JSON.stringify(err.msg))
-				}
-			})
+				    document.querySelector("#newslists").innerHTML = html;
+			
+			    }
+			});*/
 		}
 
 		function openNewsInfo(self){
-			var parms = {};
+			var parms = {tk:lt};
 			openNewWindows('newsinfo','./newsInfo.html',parms);
 		}
 
-		function aa(){
+		function aa(ht){
 			api.setCustomRefreshHeaderInfo({
 			    bgColor: '#fff',
 			    isScale: true,
@@ -138,15 +150,29 @@
 			        ]
 			    }*/
 			}, function() {
+				
 			    //下拉刷新被触发，自动进入加载状态，使用 api.refreshHeaderLoadDone() 手动结束加载中状态
 			    //下拉刷新被触发，使用 api.refreshHeaderLoadDone() 结束加载中状态  
-			    
+			    api.ajax({
+				    url: 'http://api.jisuapi.com/news/get?channel='+ht+'&start=0&num=10&appkey=61bdbb002f1edc13',
+				    method: 'get'
+				}, function(ret, err) {
+				    if (ret) {
+				        var data = {msg:ret.result.list};	
+						var html = template('list',data);
+					    document.querySelector("#newslists").innerHTML = html;
+				    }
+				    setTimeout("api.refreshHeaderLoadDone();",1200);
+				});
+			}); 
 			    api.addEventListener({
 			        name: 'shake'
 			    }, function(ret, err){
-			        setTimeout("api.refreshHeaderLoadDone()",2000)
+			        api.refreshHeaderLoadDone();
 			    });
-			});
+		}
+		function bb(){
+			api.refreshHeaderLoading();
 		}
 		function openBrower(urls){
 			var browser = api.require('webBrowser');
@@ -154,6 +180,8 @@
 			    url: urls
 			});
 		}
+		
+		
 		
 	</script>
 </html>

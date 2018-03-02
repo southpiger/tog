@@ -50,17 +50,12 @@
 				line-height: 48px;
 				height: 48px;
 				background-color: #f6f6f6;
-				
 			}
 			.newsnav{
 				box-sizing: border-box;
-				height: 48px;
-				float: left;
 				border-bottom: 6px solid #F6F6F6;
-				overflow-x: scroll;
 			}
 			.newsnav li{
-				
 				line-height: 48px;
 				float: left;
 				box-sizing: border-box;
@@ -77,7 +72,7 @@
 		</style>
 	</head>
 	<body>
-		<div class="newslist_h clearfix" id="topbar" style="display: block;">
+		<div class="newslist_h clearfix" id="topbar" style="display: none;">
 			<div class="head clearfix">
 				<div class="backbtn " onclick="api.closeWin()">
 					<img src="../../image/back.png" alt="" />
@@ -92,8 +87,9 @@
 	</body>
 	
 	<script id="newslist" type="text/html">
+		
 		<%for(var i=0;i<msg.length;i++){%>
-			<li class="clearfix"><%=msg[i]%></li>
+			<li class="clearfix" onclick="openFrame(this,<%=i%>)" ><%=msg[i]%></li>
 		<%}%>
 	</script>
 	<script type="text/javascript" src="../../script/api.js"></script>
@@ -106,44 +102,41 @@
 		var lis=[];
 		
 		apiready = function(){
+
 			var head = $api.dom('#topbar');
 			$api.fixStatusBar(head);		//沉浸式，自动给当前的头部添加状态栏的高度，以内边距padding-top的方式
-			head.style.display = "block";
-			head_h = head.offsetHeight;
-			bottom_h=0;
+			head.style.display = "block";		
+			
 			api.ajax({
+				
 			    url: 'http://api.jisuapi.com/news/channel?appkey=61bdbb002f1edc13',
 			    method: 'get'
+			    
 			}, function(ret,err){
+				
 				var frameArr = []
 				if(ret){
 					var data = {msg:ret.result};	
 					var html = template('newslist',data);
 			        document.querySelector(".newsnav").innerHTML = html;
-			        
+			        head_h = head.offsetHeight;
+					bottom_h=0;
 				}else{
 					alert(JSON.stringify(err.msg))
 				}
-					lis = $api.domAll('li');
-					$api.addCls(lis[0],'spg');
-					var tom = $api.html($api.dom('.spg'));
-			        alert(tom)
-			        var pm = {tm:tom};
-//			        initOpen(pm);
+				
+					lis = $api.domAll('li');					
 			        
 			        var frames = []; // 选择所有匹配的DOM元素
 					for (var i = 0,len = lis.length; i < len; i++) {
-					        
+					        var tom = $api.html(lis[i]);
+					        var pm = {tm:tom};
 					        var url = './newslist_body.html';
 					        frames.push( { 
 					            name: 'frame'+i, 
 					            url: url,
 					            pageParam:pm
 					        } )
-					        $(lis[i]).click(function(){
-					        	tk(i);
-					        })
-					        
 					}
 					
 					api.openFrameGroup({ // 打开 frame 组
@@ -158,47 +151,28 @@
 					    index: 0,
 					    frames: frames
 					}, function (ret, err) {
-					
+//						alert(JSON.stringify(ret))
 					});
-				tk(i)
 			});
-			
 		}
 		
-		function tk(i){
-//			for (var i=0;i<lis.length;i++){
-	        	$(lis[i]).click(function(){
-	        		$(lis).removeClass('spg');
-	        		$(this).addClass('spg');
-	        		var tom = $api.html($api.dom('.spg'));
-			        var pm = {tm:tom};
-			        var frames = []; // 选择所有匹配的DOM元素
-					for (var i = 0,len = lis.length; i < len; i++) {
-					        // 判断是否登录
-					        var url = './newslist_body.html';
-					        frames.push( { 
-					            name: 'frame'+i, 
-					            url: url,
-					            pageParam:pm
-					        } )
-					}
-					
-					api.openFrameGroup({ // 打开 frame 组
-					    name: 'group111',
-					    scrollEnabled: false,
-					    rect: {
-					        x: 0,
-					        y: head_h,
-					        w: api.winWidth,
-					        h: api.winHeight-head_h
-					    },
-					    index: 0,
-					    frames: frames
-					}, function (ret, err) {
-					
-					});
-	        	})
-//			}
+		function  openFrame(obj,index){
+			var head = $api.dom('.newsnav');
+			var bars = $api.domAll(head,'li');
+			$(".newsnav li").removeClass('spg');
+			$(obj).addClass('spg');
+
+			api.setFrameGroupIndex({
+				name:'group112',
+				index:index
+			})
+		}
+		function bb(){
+			api.refreshHeaderLoading();
+//			setTimeout('api.refreshHeaderLoadDone()',1000);
+		}
+		function cc(){
+			api.refreshHeaderLoadDone();
 		}
 	</script>
 </html>
