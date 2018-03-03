@@ -81,7 +81,7 @@
 	
 	<script type="text/html" id="list">
 		<%for(var i=0;i<msg.length;i++){%>
-			<li class="mui-table-view-cell mui-media" onclick="openBrower(<%=msg[i].url%>)">
+			<li class="mui-table-view-cell mui-media" onclick="'openBrower('+<%=msg[i].url%>+')'">
 				<a href="javascript:;">
 					 
 						<%if(pic[i]=='' || pic[i]==null || pic[i]==undefined){%>
@@ -148,6 +148,7 @@
 			api.refreshHeaderLoading();
 		}
 		function openBrower(urls){
+			alert(urls);
 			var browser = api.require('webBrowser');
 			browser.open({
 			    url: urls
