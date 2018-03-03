@@ -84,7 +84,7 @@
 			<li class="mui-table-view-cell mui-media" onclick="openNewsInfo(this)">
 				<a href="javascript:;">
 					 
-						<%if(msg[i].pic==''){%>
+						<%if(pic[i]==''){%>
 							<img class="mui-media-object mui-pull-left" src="../../image/404person.png">
 						<%}else{%>
 							<img class="mui-media-object mui-pull-left" src="<%=pic[i]%>">
@@ -114,19 +114,7 @@
 			
 			aa(ht);
 			morenews();
-			/*api.ajax({
-			    url: 'http://api.jisuapi.com/news/get?channel='+ht+'&start=0&num=10&appkey=61bdbb002f1edc13',
-			    method: 'get'
-			}, function(ret, err) {
-			    if (ret) {
-			    	
-			    	lt=ret.result.list.url;
-			        var data = {msg:ret.result.list};	
-					var html = template('list',data);
-				    document.querySelector("#newslists").innerHTML = html;
-			
-			    }
-			});*/
+			 
 		}
 
 		function openNewsInfo(self){
@@ -139,40 +127,19 @@
 			api.setCustomRefreshHeaderInfo({
 			    bgColor: '#fff',
 			    isScale: true,
-			    /*image: {
-			        pull: [
-			            'widget://image/refresh/dropdown0.png',
-			            'widget://image/refresh/dropdown1.png',
-			            'widget://image/refresh/dropdown2.png',
-			            'widget://image/refresh/dropdown3.png',
-			            'widget://image/refresh/dropdown4.png',
-			            'widget://image/refresh/dropdown5.png',
-			            'widget://image/refresh/dropdown6.png'
-			        ],
-			        load: [
-			            'widget://image/refresh/loading0.png',
-			            'widget://image/refresh/loading1.png',
-			            'widget://image/refresh/loading2.png',
-			            'widget://image/refresh/loading3.png',
-			            'widget://image/refresh/loading4.png'
-			        ]
-			    }*/
 			}, function() {
-				
 			    //下拉刷新被触发，自动进入加载状态，使用 api.refreshHeaderLoadDone() 手动结束加载中状态
 			    //下拉刷新被触发，使用 api.refreshHeaderLoadDone() 结束加载中状态  
 			    api.ajax({
 				    url: 'http://api.jisuapi.com/news/get?channel='+ht+'&start=0&num=3&appkey=61bdbb002f1edc13',
 				    method: 'get'
 				}, function(ret, err) {
-				    
 				    if (ret) {
-				    	spg = ret.result.list;
-				    	sdk(spg);
-				    	var data = {msg:spg,pic:dd};
-					    var html = template('list',data);
-						document.querySelector("#newslists").innerHTML = html;
-						setTimeout("api.refreshHeaderLoadDone();",1200);
+				    	var bbq = ret.result.list;
+				    	alert(JSON.stringify(bbq))
+				    	var hesh = sdk(bbq);
+				    	
+				    	setTimeout(heat(bbq,hesh),2000);
 				    }else{
 				    	alert(JSON.stringify(err.msg));
 				    }
@@ -215,16 +182,25 @@
 		    });
 			
 		}
-		function sdk(pics){
+		function sdk(apcr){
 			var dd=[];
-			for(var i=0;i<pics.length;i++){    		
+			for(var i=0;i<apcr.length;i++){
+				var ap=apcr[i];
 	    		api.imageCache({
-					url:pics[i].pic
+					url:ap.pic
 				}, function(ret, err) {	
-				    $(dd).push(ret.url);
+				    dd.push(ret.url);
 				});
 	    	}
 			return dd;
+			
+		}
+		function heat(mmo,mod){
+			
+			var data = {msg:mmo,pic:mod};
+		    var html = template('list',data);
+			document.querySelector("#newslists").innerHTML = html;
+			setTimeout("api.refreshHeaderLoadDone();",1200);
 		}
 	</script>
 </html>
