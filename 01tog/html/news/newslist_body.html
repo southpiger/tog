@@ -84,7 +84,7 @@
 			<li class="mui-table-view-cell mui-media" onclick="openNewsInfo(this)">
 				<a href="javascript:;">
 					 
-						<%if(pic[i]==''){%>
+						<%if(pic[i]=='' || pic[i]==null || pic[i]==undefined){%>
 							<img class="mui-media-object mui-pull-left" src="../../image/404person.png">
 						<%}else{%>
 							<img class="mui-media-object mui-pull-left" src="<%=pic[i]%>">
@@ -165,9 +165,9 @@
 				    method: 'get'
 				}, function(ret, err) {
 				    if (ret) {
-				        var sd = ret.result.list;
-				    	var spig = sdk(sd);
-				    	setTimeout(function(){lain(sd,spig,ht);},1000);
+				        var sdd = ret.result.list;
+				    	var spig = sdk(sdd);
+				    	setTimeout(function(){lain(sdd,spig,ht)},1000);
 				    }else{
 				    	alert(JSON.stringify(err.msg));
 				    	return;
