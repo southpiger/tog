@@ -110,7 +110,7 @@
 			var tom = $api.byId('tom');
 			var UIScrollPicture = api.require('UIScrollPicture');
 			api.ajax({
-			    url: 'http://api.jisuapi.com/news/get?channel=头条&start=0&num=3&appkey=61bdbb002f1edc13',
+			    url: 'http://api.jisuapi.com/news/get?channel=头条&start=0&num=5&appkey=61bdbb002f1edc13',
 			    method: 'get'
 			    
 			}, function(ret, err) {
@@ -181,6 +181,7 @@
 			        
 			    } else {
 			        api.alert({ msg: JSON.stringify(err.msg) });
+			        return;
 			    }
 			});
 		}
