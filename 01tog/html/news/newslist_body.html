@@ -81,8 +81,8 @@
 	
 	<script type="text/html" id="list">
 		<%for(var i=0;i<msg.length;i++){%>
-			<li class="mui-table-view-cell mui-media" onclick="'openBrower('+<%=msg[i].url%>+')'">
-				<a href="javascript:;">
+			<li class="mui-table-view-cell mui-media" onclick="openBrower('<%=msg[i].url%>')">
+				<a href="javascript:void(0);">
 					 
 						<%if(pic[i]=='' || pic[i]==null || pic[i]==undefined){%>
 							<img class="mui-media-object mui-pull-left" src="../../image/404person.png">
@@ -107,15 +107,15 @@
 	<script>
 		var lt,ht,td=0;
 		apiready = function(){
-			bb()
+			bb();
 			ht = api.pageParam.tm;
 			aa(ht);
 			morenews(ht);
 		}
-		function openNewsInfo(self){
+		/*function openNewsInfo(self){
 			var parms = {tk:lt};
 			openNewWindows('newsinfo','./newsInfo.html',parms);
-		}
+		}*/
 		function aa(ht){
 			var dd=[],spg;
 			api.setCustomRefreshHeaderInfo({
@@ -148,7 +148,6 @@
 			api.refreshHeaderLoading();
 		}
 		function openBrower(urls){
-			alert(urls);
 			var browser = api.require('webBrowser');
 			browser.open({
 			    url: urls
@@ -156,7 +155,6 @@
 		}
 		//上拉加载
 		function morenews(ht){
-			
 			api.addEventListener({
 			        name: 'scrolltobottom'
 			}, function(ret, err){
