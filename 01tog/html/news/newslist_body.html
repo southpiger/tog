@@ -75,7 +75,7 @@
 				</ul>
 				<p class="more" onclick="morenews()"><span>上拉加载更多</span></p>
 			</div>
-			
+			<img src="" alt="" class="tom"/>
 		</div>
 	</body>
 	
@@ -106,22 +106,16 @@
 	
 	<script>
 		var lt,ht,td=0;
-		
 		apiready = function(){
 			bb()
-//			location.reload();
 			ht = api.pageParam.tm;
-			
 			aa(ht);
 			morenews();
-			 
 		}
-
 		function openNewsInfo(self){
 			var parms = {tk:lt};
 			openNewWindows('newsinfo','./newsInfo.html',parms);
 		}
-		
 		function aa(ht){
 			var dd=[],spg;
 			api.setCustomRefreshHeaderInfo({
@@ -139,7 +133,8 @@
 				    	alert(JSON.stringify(bbq))
 				    	var hesh = sdk(bbq);
 				    	
-				    	setTimeout(heat(bbq,hesh),2000);
+				    	setTimeout(function(){heat(bbq,hesh)},2000);
+				    	
 				    }else{
 				    	alert(JSON.stringify(err.msg));
 				    }
@@ -179,8 +174,7 @@
 				    	alert(JSON.stringify(err.msg))
 				    }
 				});
-		    });
-			
+		   });
 		}
 		function sdk(apcr){
 			var dd=[];
@@ -190,13 +184,12 @@
 					url:ap.pic
 				}, function(ret, err) {	
 				    dd.push(ret.url);
+				    $(".tom").attr('src',ret.url)
 				});
 	    	}
 			return dd;
-			
 		}
 		function heat(mmo,mod){
-			
 			var data = {msg:mmo,pic:mod};
 		    var html = template('list',data);
 			document.querySelector("#newslists").innerHTML = html;
