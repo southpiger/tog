@@ -75,7 +75,7 @@
 				</ul>
 				<p class="more" onclick="morenews()"><span>上拉加载更多</span></p>
 			</div>
-			<img src="" alt="" class="tom"/>
+			
 		</div>
 	</body>
 	
@@ -92,7 +92,7 @@
 						
 					<div class="mui-media-body">
 						<span class="title_name"><%=msg[i].title%></span>
-						<p class='mui-ellipsis'><%=msg[i].src%>&nbsp;&nbsp;<%=msg[i].time%>&nbsp;&nbsp;<%=pic[i]%></p>
+						<p class='mui-ellipsis'><%=msg[i].src%>&nbsp;&nbsp;<%=msg[i].time%> <%=category%>&nbsp;&nbsp;<%=pic[i]%></p>
 					</div>
 				</a>
 			</li>
@@ -110,7 +110,7 @@
 			bb()
 			ht = api.pageParam.tm;
 			aa(ht);
-			morenews();
+			morenews(ht);
 		}
 		function openNewsInfo(self){
 			var parms = {tk:lt};
@@ -123,20 +123,17 @@
 			    isScale: true,
 			}, function() {
 			    //下拉刷新被触发，自动进入加载状态，使用 api.refreshHeaderLoadDone() 手动结束加载中状态
-			    //下拉刷新被触发，使用 api.refreshHeaderLoadDone() 结束加载中状态  
 			    api.ajax({
-				    url: 'http://api.jisuapi.com/news/get?channel='+ht+'&start=0&num=3&appkey=61bdbb002f1edc13',
+				    url: 'http://api.jisuapi.com/news/get?channel='+ht+'&start=0&num=5&appkey=61bdbb002f1edc13',
 				    method: 'get'
 				}, function(ret, err) {
 				    if (ret) {
 				    	var bbq = ret.result.list;
-				    	alert(JSON.stringify(bbq))
 				    	var hesh = sdk(bbq);
-				    	
-				    	setTimeout(function(){heat(bbq,hesh)},2000);
-				    	
+				    	setTimeout(function(){heat(bbq,hesh,dog)},1500);
 				    }else{
 				    	alert(JSON.stringify(err.msg));
+				    	return;
 				    }
 				});
 			}); 
@@ -156,22 +153,24 @@
 			    url: urls
 			});
 		}
-		function morenews(){
+		//上拉加载
+		function morenews(ht){
+			
 			api.addEventListener({
 			        name: 'scrolltobottom'
 			}, function(ret, err){
-				
-		        td+=1;
+		        td+=5;
 				api.ajax({
-				    url: 'http://api.jisuapi.com/news/get?channel='+ht+'&start='+td+'&num=1&appkey=61bdbb002f1edc13',
+				    url: 'http://api.jisuapi.com/news/get?channel='+ht+'&start='+td+'&num=5&appkey=61bdbb002f1edc13',
 				    method: 'get'
 				}, function(ret, err) {
 				    if (ret) {
-				        var data = {msg:ret.result.list};	
-						var html = template('list',data);
-					    document.querySelector("#newslists").innerHTML += html;
+				        var sd = ret.result.list;
+				    	var spig = sdk(sd);
+				    	setTimeout(function(){lain(sd,spig,ht);},1000);
 				    }else{
-				    	alert(JSON.stringify(err.msg))
+				    	alert(JSON.stringify(err.msg));
+				    	return;
 				    }
 				});
 		   });
@@ -189,11 +188,16 @@
 	    	}
 			return dd;
 		}
-		function heat(mmo,mod){
-			var data = {msg:mmo,pic:mod};
+		function heat(mmo,mod,hd){
+			var data = {msg:mmo,pic:mod,category:hd};
 		    var html = template('list',data);
 			document.querySelector("#newslists").innerHTML = html;
 			setTimeout("api.refreshHeaderLoadDone();",1200);
+		}
+		function lain(mmo,mod,hd){
+			var data = {msg:mmo,pic:mod,category:hd};
+		    var html = template('list',data);
+			document.querySelector("#newslists").innerHTML += html;
 		}
 	</script>
 </html>

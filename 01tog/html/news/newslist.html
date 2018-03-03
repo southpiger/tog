@@ -108,12 +108,9 @@
 			head.style.display = "block";		
 			
 			api.ajax({
-				
 			    url: 'http://api.jisuapi.com/news/channel?appkey=61bdbb002f1edc13',
 			    method: 'get'
-			    
 			}, function(ret,err){
-				
 				var frameArr = []
 				if(ret){
 					var data = {msg:ret.result};	
@@ -122,7 +119,8 @@
 			        head_h = head.offsetHeight;
 					bottom_h=0;
 				}else{
-					alert(JSON.stringify(err.msg))
+					alert(JSON.stringify(err.msg));
+					return;
 				}
 				
 					lis = $api.domAll('li');					
@@ -146,12 +144,11 @@
 					        x: 0,
 					        y: head_h,
 					        w: api.winWidth,
-					        h: api.winHeight-head_h
+					        h: api.winHeight-head_h-bottom_h
 					    },
 					    index: 0,
 					    frames: frames
 					}, function (ret, err) {
-//						alert(JSON.stringify(ret))
 					});
 			});
 		}
@@ -167,12 +164,6 @@
 				index:index
 			})
 		}
-		function bb(){
-			api.refreshHeaderLoading();
-//			setTimeout('api.refreshHeaderLoadDone()',1000);
-		}
-		function cc(){
-			api.refreshHeaderLoadDone();
-		}
+		
 	</script>
 </html>
