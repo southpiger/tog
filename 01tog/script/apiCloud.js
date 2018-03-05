@@ -318,7 +318,6 @@ function openImage(max,needCopy,callBack) {
                         }else{
                             endSuccessCallBack();
                         }
-
                     });
                 })(i);
             }

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    	<meta name="apple-mobile-web-app-capable" content="yes">
+    	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<title>新闻列表</title>
+		<link rel="stylesheet" href="../../css/api.css" />
+		<link rel="stylesheet" href="../../css/mui.min.css" />
+		<link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css">
+		<script src="../../script/common.js"></script>
+		<style type="text/css">
+			*{
+				box-sizing: content-box;
+				-webkit-box-sizing: content-box;
+				background-color: #fff;
+			}
+			.clearfix:before{
+				content: '';
+				height: 0;
+				line-height: 0;
+				display: block;
+				visibility: hidden;
+				clear: both;
+			}
+			.playing{
+				width: 50px;
+				margin: 0 auto;
+				padding-top: 50px;
+			}
+			.playing span{
+				color: gray;
+			}
+			.play{
+				display: block;
+			}
+			.pause{
+				display: block;
+			}
+			.time{
+				text-align: center;
+				padding-top: 12px;
+				color: #666;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="music_m clearfix">
+			<div class="playing">
+				<span class="fa fa-play" class="playPause" onclick="play()"></span>
+			</div>
+			<p class="time"></p>
+		</div>
+	</body>
+	<script type="text/html" id="playtime">
+		for(var i=0; i<msg.length; i++){
+			<span><%=msg.current%></span>/<span><%=msg.duration%></span>
+		}
+	</script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script src="../../script/jquery-3.2.1.min.js"></script>
+	<script src="../../script/template-native.js"></script>
+	<script src="../../script/apiCloud.js"></script>
+	<script>
+		apiready = function(){
+			
+		}
+		function play(){
+			$api.toggleCls(".playPause", 'fa fa-pause');
+			var audio = api.require('audio');
+			audio.play({
+			    path: 'http://7xisq1.com1.z0.glb.clouddn.com/apicloud/0d0b81b8bd5ab81bda9ca54267eb9b98.mp3'
+			}, function(ret, err) {
+			    if (ret) {
+			        alert(JSON.stringify(ret));
+			        var data = {msg:ret};	
+					var html = template('playtime',data);
+			        document.querySelector(".time").innerHTML = html;
+			    } else {
+			        alert(JSON.stringify(err));
+			    }
+			});
+		}
+		function pause(){
+			$api.toggleCls(".playPause", 'fa fa-play');
+			var audio = api.require('audio');
+			audio.pause();
+		}
+	</script>
+</html>

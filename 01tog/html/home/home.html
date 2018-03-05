@@ -42,7 +42,6 @@
 				text-align: center;
 				font-size: 14px;
 				color: #999;
-				
 			}
 			.barlis li span{
 				font-size: 24px;
@@ -121,7 +120,7 @@
 			api.addEventListener({
 	            name: 'keyback'
 	        }, function (ret, err) {
-	            closeOnKeyBack();
+	            closeApp();
 	        });
 		}
 		
@@ -160,7 +159,6 @@
 	        setTimeout(function () {
 	            backButtonPress = 0;
 	        }, 1000);
-	        
 	    }
 	   
 	    function closeApp(){

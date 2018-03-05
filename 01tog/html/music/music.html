@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    	<meta name="apple-mobile-web-app-capable" content="yes">
+    	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<title>新闻列表</title>
+		<link rel="stylesheet" href="../../css/api.css" />
+		<link rel="stylesheet" href="../../css/mui.min.css" />
+		<script src="../../script/common.js"></script>
+		<style type="text/css">
+			*{
+				box-sizing: content-box;
+				-webkit-box-sizing: content-box;
+				background-color: #fff;
+			}
+			.clearfix:before{
+				content: '';
+				height: 0;
+				line-height: 0;
+				display: block;
+				visibility: hidden;
+				clear: both;
+			}
+			.news{
+				width: 100%;
+				min-width: 320px;
+			}
+			.head{
+				font-size: 18px;
+				padding:  0 15px;
+				line-height: 48px;
+				height: 48px;
+				background-color: #f6f6f6;
+			}
+			.head .backbtn{
+				float: left;
+				line-height: 48px;
+			}
+			.head .backbtn img{
+				width: 15px;
+				height: 23px;
+				vertical-align: middle;
+				background-color: #f6f6f6;
+			}
+			.head div{
+				text-align: center;
+				line-height: 48px;
+				height: 48px;
+				background-color: #f6f6f6;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<div class="newslist_h clearfix" id="topbar">
+			<div class="head clearfix">
+				<div class="backbtn " onclick="api.closeWin()">
+					<img src="../../image/back.png" alt="" />
+				</div>
+				<div>音乐欣赏</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script src="../../script/jquery-3.2.1.min.js"></script>
+	<script src="../../script/template-native.js"></script>
+	<script src="../../script/apiCloud.js"></script>
+	<script>
+		apiready = function(){
+			initFrameInWin(api.pageParam);
+		}
+	</script>
+</html>
