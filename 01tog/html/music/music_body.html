@@ -74,7 +74,6 @@
 			    path: 'http://7xisq1.com1.z0.glb.clouddn.com/apicloud/0d0b81b8bd5ab81bda9ca54267eb9b98.mp3'
 			}, function(ret, err) {
 			    if (ret) {
-			        alert(JSON.stringify(ret));
 			        var data = {msg:ret};	
 					var html = template('playtime',data);
 			        document.querySelector(".time").innerHTML = html;
