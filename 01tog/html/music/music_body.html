@@ -67,7 +67,7 @@
 		apiready = function(){
 			var ht = $api.dom('.playPause')
 			$(ht).click(function(){
-				if (ht.paused) {  
+				if (ht.attr('class')=="fa fa-play") {  
                     play();   
                 }else{  
                     pause();
