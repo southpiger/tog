@@ -55,9 +55,9 @@
 		</div>
 	</body>
 	<script type="text/html" id="playtime">
-		for(var i=0; i<msg.length; i++){
-			<span><%=msg.current%></span>/<span><%=msg.duration%></span>
-		}
+		<%for(var i=0; i<msg.length; i++){%>
+			<span><%=msg[i].current%></span>/<span><%=msg[i].duration%></span>
+		<%}%>
 	</script>
 	<script type="text/javascript" src="../../script/api.js"></script>
 	<script src="../../script/jquery-3.2.1.min.js"></script>
