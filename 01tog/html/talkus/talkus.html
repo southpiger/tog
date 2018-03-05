@@ -49,16 +49,18 @@
 	<script>
 		apiready = function(){
 			var bookReader = api.require('bookReader');
-			
+			var cc=aps();
+			opentxt(cc);
 		}
 		function aps(){
-			var selectFile = api.require('selectFile');
-			selectFile.open(function(ret, err){
-			    if(ret.status){
-			        alert(JSON.stringify(ret.path));
-			        opentxt(ret.path);
-			    }else{
-			        alert('选择文件不存在');
+			var fileBrowser = api.require('fileBrowser');
+			fileBrowser.open(function(ret, err) {
+			    if (ret) {
+			        alert(JSON.stringify(ret.url));
+			        var url = ret.url;
+			        return url;
+			    } else {
+			        alert('选择的文件读取不到');
 			    }
 			});
 		}
@@ -68,7 +70,6 @@
 			    textStyle:{
 			    	size:14
 			    }
-			    
 			}, function(ret, err) {
 			    if (ret) {
 			        
