@@ -41,23 +41,22 @@
 				<div>提交</div>
 			</div>
 			<div>
-				<p class="tom"><span>查找</span></p>
+				<p class="tom"><span onclick="aps()">查找</span></p>
 			</div>
 		</div>
 	</body>
 	<script src="../../script/api.js"></script>
 	<script>
 		apiready = function(){
-			var cc=aps();
-			opentxt(cc);
+			
 		}
 		function aps(){
 			var fileBrowser = api.require('fileBrowser');
 			fileBrowser.open(function(ret, err){
 			    if (ret) {
 			        alert(JSON.stringify(ret));
-			        var url = ret;
-			        return url;
+//			        var cc = ret;
+//			        opentxt(cc);
 			    } else {
 			        alert('选择的文件读取不到');
 			    }
