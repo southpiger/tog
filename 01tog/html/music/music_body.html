@@ -49,7 +49,8 @@
 	<body>
 		<div class="music_m clearfix">
 			<div class="playing">
-				<span class="fa fa-play" id="playPause"></span>
+				<span class="fa fa-play" id="play"></span>
+				<span class="fa fa-pause" id="pause" style="display: none;"></span>
 			</div>
 			<p class="time"></p>
 		</div>
@@ -65,8 +66,8 @@
 	<script src="../../script/apiCloud.js"></script>
 	<script>
 		apiready = function(){
-			$("#playPause").click(function(){
-				var className = $(this).attr("class");
+			$(".playing").click(function(){
+				var className = $(this).find(span).attr("class");
 				if (className=="fa fa-play") {  
                     play();   
                 }else{
@@ -75,7 +76,8 @@
 			});
 		}
 		function play(){
-			$api.toggleCls(".playPause", 'fa fa-pause');
+			$("fa-play").css('display','none');
+			$("fa-pause").css('display','block');
 			var audio = api.require('audio');
 			audio.play({
 			    path: 'http://7xisq1.com1.z0.glb.clouddn.com/apicloud/0d0b81b8bd5ab81bda9ca54267eb9b98.mp3'
@@ -90,7 +92,8 @@
 			});
 		}
 		function pause(){
-			$api.toggleCls(".playPause", 'fa fa-play');
+			$("fa-pause").css('display','none');
+			$("fa-play").css('display','block');
 			var audio = api.require('audio');
 			audio.pause();
 		}
