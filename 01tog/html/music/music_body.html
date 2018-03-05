@@ -55,9 +55,9 @@
 		</div>
 	</body>
 	<script type="text/html" id="playtime">
-		<%for(var i=0; i<msg.length; i++){%>
-			<span><%=msg[i].current%></span>/<span><%=msg[i].duration%></span>
-		<%}%>
+		
+			<span><%=msg.current%></span>/<span><%=msg.duration%></span>
+		
 	</script>
 	<script type="text/javascript" src="../../script/api.js"></script>
 	<script src="../../script/jquery-3.2.1.min.js"></script>
@@ -65,7 +65,14 @@
 	<script src="../../script/apiCloud.js"></script>
 	<script>
 		apiready = function(){
-			
+			var ht = $api.dom('.playPause')
+			$(ht).click(function(){
+				if (ht.paused) {  
+                    play();   
+                }else{  
+                    pause();
+                }
+			});
 		}
 		function play(){
 			$api.toggleCls(".playPause", 'fa fa-pause');
