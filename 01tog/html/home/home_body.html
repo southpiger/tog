@@ -110,7 +110,7 @@
 			var tom = $api.byId('tom');
 			var UIScrollPicture = api.require('UIScrollPicture');
 			api.ajax({
-			    url: 'http://api.jisuapi.com/news/get?channel=头条&start=0&num=5&appkey=61bdbb002f1edc13',
+			    url: 'http://api.jisuapi.com/news/get?channel=星座&start=0&num=5&appkey=61bdbb002f1edc13',
 			    method: 'get'
 			    
 			}, function(ret, err) {
@@ -136,13 +136,12 @@
 							    }
 							});	
 			        	}
-			        	for(var y=0;y<arr1.length;y++){
-			        		alert(arr1[y])
-			        	}
 //			        	alert(JSON.stringify(arr1))
 			        	arr2.push(ak.url);
 			        }
-			        
+			        for(var y=0;y<arr1.length;y++){
+			        		alert(arr1[y]);
+			        	}
 			        UIScrollPicture.open({
 					    rect: {
 					        x: 0,

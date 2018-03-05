@@ -54,10 +54,12 @@
 			var fileBrowser = api.require('fileBrowser');
 			fileBrowser.open(function(ret, err){
 			    if (ret) {
+			    	fileBrowser.close();
 			        alert(JSON.stringify(ret));
-//			        var cc = ret;
-//			        opentxt(cc);
+			        var cc = ret.url;
+			        opentxt(cc);
 			    } else {
+			    	fileBrowser.close();
 			        alert('选择的文件读取不到');
 			    }
 			});
@@ -71,7 +73,7 @@
 			    }
 			}, function(ret, err) {
 			    if (ret) {
-			        
+			        alert(JSON.stringify(err));
 			    } else {
 			        alert(JSON.stringify(err));
 			    }
