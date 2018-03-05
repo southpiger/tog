@@ -65,11 +65,11 @@
 	<script src="../../script/apiCloud.js"></script>
 	<script>
 		apiready = function(){
-			var ht = $api.dom('.playPause')
-			$(ht).click(function(){
-				if (ht.attr('class')=="fa fa-play") {  
+			$(".playPause").click(function(){
+				var className = String($(this).attr("class"));
+				if (className=="fa fa-play") {  
                     play();   
-                }else{  
+                }else{
                     pause();
                 }
 			});
