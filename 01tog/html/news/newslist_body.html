@@ -58,11 +58,15 @@
 				color: dodgerblue;
 			}
 			.more{
+				height: 24px;
+				padding-top: 12px;
 				text-align: center;
-				line-height: 36px;
+				display: none;
 			}
-			
-			
+			.load{
+				width: 14px;
+				margin: 0 auto;
+			}
 		</style>
 	</head>
 	<body>
@@ -73,7 +77,7 @@
 				<ul class="mui-table-view" id="newslists">
 
 				</ul>
-				<p class="more" onclick="morenews()"><span>上拉加载更多</span></p>
+				<p class="more"><img src="../../image/loading_more.gif" class="load"/>刷新中</p>
 			</div>
 			
 		</div>
@@ -112,10 +116,6 @@
 			aa(ht);
 			morenews(ht);
 		}
-		/*function openNewsInfo(self){
-			var parms = {tk:lt};
-			openNewWindows('newsinfo','./newsInfo.html',parms);
-		}*/
 		function aa(ht){
 			var dd=[],spg;
 			api.setCustomRefreshHeaderInfo({
@@ -158,6 +158,7 @@
 			api.addEventListener({
 			        name: 'scrolltobottom'
 			}, function(ret, err){
+				$('.more').css('display','block')
 		        td+=5;
 				api.ajax({
 				    url: 'http://api.jisuapi.com/news/get?channel='+ht+'&start='+td+'&num=5&appkey=61bdbb002f1edc13',
@@ -182,7 +183,6 @@
 					url:ap.pic
 				}, function(ret, err) {	
 				    dd.push(ret.url);
-				    $(".tom").attr('src',ret.url)
 				});
 	    	}
 			return dd;
@@ -196,6 +196,7 @@
 		function lain(mmo,mod,hd){
 			var data = {msg:mmo,pic:mod,category:hd};
 		    var html = template('list',data);
+		    $('.more').css('display','none')
 			document.querySelector("#newslists").innerHTML += html;
 		}
 	</script>
