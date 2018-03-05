@@ -49,7 +49,7 @@
 	<body>
 		<div class="music_m clearfix">
 			<div class="playing">
-				<span class="fa fa-play" class="playPause"></span>
+				<span class="fa fa-play" id="playPause"></span>
 			</div>
 			<p class="time"></p>
 		</div>
@@ -65,8 +65,8 @@
 	<script src="../../script/apiCloud.js"></script>
 	<script>
 		apiready = function(){
-			$(".playPause").click(function(){
-				var className = String($(this).attr("class"));
+			$("#playPause").click(function(){
+				var className = $(this).attr("class");
 				if (className=="fa fa-play") {  
                     play();   
                 }else{
