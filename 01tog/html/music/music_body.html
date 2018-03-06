@@ -96,7 +96,7 @@
 			        var data = {msg:ret};	
 					var html = template('playtime',data);
 			        document.querySelector(".time").innerHTML = html;
-			        var pp = ret.current/ret.duration;
+			        var pp = ret.current/ret.duration*100+'%';
 			        $(".forward").css('width',pp);
 			    } else {
 			        alert(JSON.stringify(err));
