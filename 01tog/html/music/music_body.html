@@ -166,7 +166,7 @@
 			        parms.url = ret.url;
 			        var model = api.require('model');
 					model.insert({
-					    class: 'user',
+					    class: 'music',
 					    value: parms
 					}, function(ret, err){
 					    if( ret ){
@@ -197,7 +197,7 @@
 			}, function( ret, err ) {
 			    if( ret ){
 			        alert( JSON.stringify( ret ) );
-			        var data = {msg:ret.data};
+			        var data = {msg:ret};
 			        var html = template('miclis',data);
 			        document.querySelector(".miclist").innerHTML = html;
 			    }else{
