@@ -193,11 +193,11 @@
 		function search(){
 			var db = api.require('db');
 			var ret = db.openDatabaseSync({
-			    name: 'TOG'
+			    name: 'database'
 			});
 			var sql = 'SELECT * FROM music';
 			db.selectSql({
-			    name:'TOG',
+			    name:'database',
 			    sql: sql
 			}, function(ret, err){
 			    if(ret.status){
