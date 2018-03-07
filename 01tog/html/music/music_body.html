@@ -43,9 +43,9 @@
 				margin-top: -16px;
 			}
 			.time{
-				text-align: center;
-				padding-top: 12px;
 				color: #666;
+				margin-top: -16px;
+				padding-left: 36px;
 			}
 			.probar{
 				width: 80%;
@@ -66,7 +66,7 @@
 				font-size: 14px;
 				margin-bottom: 36px;
 			}
-			.addMic span{
+			.addMic button{
 				margin-right: 15px;
 				line-height: 24px;
 				float: right;
@@ -77,20 +77,36 @@
 				color: #FFFFFF;
 			}
 			.miclist{
-				line-height: 36px;
+				border-top: 4px solid rgba(0,0,0,0.1);
+				margin-top: 36px;
+				
 			}
 			.miclist li{
+				line-height: 32px;
 				list-style: none;
 				border-bottom: 1px solid rgba(0,0,0,0.2);
 				padding:0 15px;
+				color:#393939;
+				font-size: 14px;
+				background-color: rgba(0,0,0,0.1);
+			}
+			.miclist li.act{
+				background-color: rgba(255,255,255,0.1);
+			}
+			.name{
+				text-align: center;
+				font-size: 12px;
+				color: forestgreen;
+				background-color: #efefef;
 			}
 		</style>
 	</head>
 	<body>
 		<div class="music_m clearfix">
 			<div class="addMic clearfix">
-				<span onclick="addmic()">添加+</span>
+				<button onclick="addmic()">添加+</button>
 			</div>
+			<p class="name">1111</p>
 			<div class="probar">
 				<p class="forward"></p>
 			</div>
@@ -99,8 +115,9 @@
 				<span class="fa fa-pause" id="pause" style="display: none;" onclick="pause()"></span>
 				
 				<span class="fa fa-stop"></span>
+				<span class="time"></span>
 			</div>
-			<p class="time"></p>
+			
 			<ul class="miclist">
 				
 			</ul>
@@ -119,19 +136,22 @@
 	<script src="../../script/template-native.js"></script>
 	<script src="../../script/apiCloud.js"></script>
 	<script>
-		
 		apiready = function(){
 			search();
 		}
+		
 		function play(url){
 			$(".fa-play").css('display','none');
 			$(".fa-pause").css('display','block');
 			var audio = api.require('audio');
+			$(".miclist li").removeClass('act');
+			$(this).addClass('act');
+			var name = $(this).text();
+			$(".name").html(name);
 			audio.play({
 			    path: url
 			}, function(ret, err) {
 			    if (ret) {
-			    	alert(JSON.stringify(ret))
 			        var data = {msg:ret};
 					var html = template('playtime',data);
 			        document.querySelector(".time").innerHTML = html;
@@ -162,7 +182,6 @@
 			    if (ret) {
 			    	var parms={};
 			    	fileBrowser.close();
-			        alert(JSON.stringify(ret.url));
 			        parms.name = strcut(ret.url);
 			        parms.url = ret.url;
 			        var model = api.require('model');
@@ -171,14 +190,14 @@
 					    value: parms
 					}, function(ret, err){
 					    if( ret ){
-					         alert( JSON.stringify( ret ) );
+					        api.toast('加载成功');
 					    }else{
-					         alert( JSON.stringify( err ) );
+					        api.toast( JSON.stringify(err.msg));
 					    }
 					});
 			    } else {
 			    	fileBrowser.close();
-			        alert('读取失败');
+			        api.toast('读取失败');
 			    }
 			});
 		}
@@ -197,12 +216,11 @@
 			    class: "music"
 			}, function( ret, err ) {
 			    if( ret ){
-			        alert( JSON.stringify( ret ) );
 			        var data = {msg:ret};
 			        var html = template('miclis',data);
 			        document.querySelector(".miclist").innerHTML = html;
 			    }else{
-			        alert( JSON.stringify( err ) );
+			        alert( JSON.stringify( err.msg ) );
 			    }
 			});
 		}
