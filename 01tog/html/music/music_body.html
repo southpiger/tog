@@ -164,15 +164,15 @@
 			        alert(JSON.stringify(ret.url));
 			        parms.name = strcut(ret.url);
 			        parms.url = ret.url;
-			        api.ajax({
-					    url: "https://d.apicloud.com/mcm/api/music",
-					    method: 'post',
-					    data: parms
-					}, function(ret, err) {
-					    if (ret) {
-					        api.toast(JSON.stringify(ret));
-					    } else {
-					        api.toast({msg:"加载失败"});
+			        var model = api.require('model');
+					model.insert({
+					    class: 'user',
+					    value: parms
+					}, function(ret, err){
+					    if( ret ){
+					         alert( JSON.stringify( ret ) );
+					    }else{
+					         alert( JSON.stringify( err ) );
 					    }
 					});
 			    } else {
@@ -190,34 +190,16 @@
 			return hesh[0];
 		}
 		
-		/*function search(){
-			var db = api.require('db');
-			var sql = 'SELECT * FROM music';
-			var ret = db.openDatabaseSync({
-			    name: 'TOG'
-			},function(ret){
-				db.selectSql({
-				    name:'TOG',
-				    sql: sql
-				}, function(ret, err){
-				    if(ret.status){
-				    	alert(JSON.stringify(ret))
-				        var data = {msg:ret.data};
-				        var html = template('miclis',data);
-				        document.querySelector(".miclist").innerHTML = html;
-				    } else{
-				    	alert(JSON.stringify(err))
-				    };
-				});
-			});
-		}*/
 		function search(){
 			var model = api.require('model');
 			model.findAll({
 			    class: "music"
 			}, function( ret, err ) {
 			    if( ret ){
-			        alert( JSON.stringify( ret ) );   
+			        alert( JSON.stringify( ret ) );
+			        var data = {msg:ret.data};
+			        var html = template('miclis',data);
+			        document.querySelector(".miclist").innerHTML = html;
 			    }else{
 			        alert( JSON.stringify( err ) );
 			    }
