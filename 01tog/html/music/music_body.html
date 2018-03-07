@@ -190,24 +190,37 @@
 			return hesh[0];
 		}
 		
-		function search(){
+		/*function search(){
 			var db = api.require('db');
-			var ret = db.openDatabaseSync({
-			    name: 'database'
-			});
 			var sql = 'SELECT * FROM music';
-			db.selectSql({
-			    name:'database',
-			    sql: sql
-			}, function(ret, err){
-			    if(ret.status){
-			    	alert(JSON.stringify(ret))
-			        var data = {msg:ret.data};
-			        var html = template('miclis',data);
-			        document.querySelector(".miclist").innerHTML = html;
-			    } else{
-			    	alert(JSON.stringify(err))
-			    };
+			var ret = db.openDatabaseSync({
+			    name: 'TOG'
+			},function(ret){
+				db.selectSql({
+				    name:'TOG',
+				    sql: sql
+				}, function(ret, err){
+				    if(ret.status){
+				    	alert(JSON.stringify(ret))
+				        var data = {msg:ret.data};
+				        var html = template('miclis',data);
+				        document.querySelector(".miclist").innerHTML = html;
+				    } else{
+				    	alert(JSON.stringify(err))
+				    };
+				});
+			});
+		}*/
+		function search(){
+			var model = api.require('model');
+			model.findAll({
+			    class: "music"
+			}, function( ret, err ) {
+			    if( ret ){
+			        alert( JSON.stringify( ret ) );   
+			    }else{
+			        alert( JSON.stringify( err ) );
+			    }
 			});
 		}
 	</script>
