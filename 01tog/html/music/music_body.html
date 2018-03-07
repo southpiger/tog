@@ -112,7 +112,7 @@
 		<%}%>
 	</script>
 	<script type="text/html" id="playtime">
-		<span><%=msg.current%></span>/<span><%=msg.duration%></span>
+		<%=msg.current%>/<%=msg.duration%>
 	</script>
 	<script type="text/javascript" src="../../script/api.js"></script>
 	<script src="../../script/jquery-3.2.1.min.js"></script>
@@ -131,7 +131,8 @@
 			    path: url
 			}, function(ret, err) {
 			    if (ret) {
-			        var data = {msg:ret};	
+			    	alert(JSON.stringify(ret))
+			        var data = {msg:ret};
 					var html = template('playtime',data);
 			        document.querySelector(".time").innerHTML = html;
 			        var pp = ret.current/ret.duration*100+'%';

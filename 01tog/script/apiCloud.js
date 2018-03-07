@@ -91,7 +91,7 @@ function ajax(url,params,callback,endFunction){
         dataType: 'json',
         data: {
             values: params
-            }   
+            }
         }, function (ret, err) {
             if(ret){
                 callback(ret);
@@ -356,7 +356,7 @@ function openImage(max,needCopy,callBack) {
                     //suffix: '',                  //字符串类型；文件后缀名，如：png，jpg, mp4
                     //size: 1048576,               //数字类型；资源大小，单位（Bytes）
                     //time: '2015-06-29 15:49'     //字符串类型；资源创建时间，格式：yyyy-MM-dd HH:mm:ss
-        var Multiplechoice = api.require('Multiplechoice');    
+        var Multiplechoice = api.require('Multiplechoice');
 //      api.showProgress();
 		Multiplechoice.choice({
 			maxstr : num,
@@ -458,7 +458,7 @@ function compressImage(orgSize,type,path,callBack){
             }
         }
         var imageName = hex_md5(path) +"_"+orgSize+"_"+quality +'.jpg';
-        
+
         imageFilter.compress({
             img: path,
             quality:quality,
@@ -691,7 +691,7 @@ function openFrame(name,url,pageParam,headHeight,bottomHeight,overload) {
         hScrollBarEnabled : false,
         reload : false
     };
-    
+
     if(overload) {
             for (var m in overload) {
             //if (params[m]) {
@@ -699,7 +699,7 @@ function openFrame(name,url,pageParam,headHeight,bottomHeight,overload) {
             //}
         }
     }
-    
+
     api.openFrame(params);
 }
 
@@ -719,10 +719,10 @@ function initFrameInWin(pageParam,overload){
 		var header = $api.dom('#topbar');
    		$api.fixStatusBar(header);
 	}
-    header.style.display = 'block';
+    // header.style.display = 'block';
     api.setStatusBarStyle({
 	    style: 'dark'
-	});	
+	});
     winHeadHeight = header.offsetHeight;
     openFrameInWin(api.winName + '_body','./' + api.winName + '_body.html',pageParam,overload);
 }
@@ -754,7 +754,7 @@ function getTitlePadingHeight(){
 
 
 function copyMsg(){
-    var paste = api.require('pasteboard'); 
+    var paste = api.require('pasteboard');
     var param = {value:'Hello paste'};
     paste.paste(param,function(ret,err){
         if (ret.status){
@@ -787,11 +787,11 @@ function isIos(){
 //生成滚动图片栏
 function doScrollPicture(name,paths,titles,height,callback){
     var captions = [];
-        
+
     if(isNotBlack(titles) && titles.length > 0){
         captions = titles;
     }
-            
+
     var obj = api.require('UIScrollPicture');
     obj.open({
         rect: {
@@ -1081,7 +1081,7 @@ function getLocation(callback){
         return;
     }
 //  api.showProgress({title:'定位中....'});
-    
+
     var baiduLocation = api.require('baiduLocation');
     baiduLocation.getLocation(
         function(ret, err){
@@ -1097,7 +1097,7 @@ function getLocation(callback){
                 }
             } else {
                      var historyLocation = $api.getStorage('historyLocation');
-                     
+
                      if(isNotBlack(historyLocation)){
                         var lat = historyLocation.latitude;
                         var lon = historyLocation.longitude;
@@ -1110,7 +1110,7 @@ function getLocation(callback){
                     }
                      }
             }
-            
+
 //          else{
 //              api.alert({
 //                  title: '提示',
@@ -1129,7 +1129,7 @@ function getLocation(callback){
 //          }
         }
     );
-    
+
 //  var bMap = api.require('bMap');
 //  bMap.getLocation({
 //      accuracy: '100m',
@@ -1191,12 +1191,12 @@ function loopTest(functions,paramsArray){
             loopTest(functions,paramsArray);
             return;
         }
-        
+
         for(var i = 0; i < functions.length;i++){
             var timeout = functions[i].timeout;
             var callback = functions[i].callback;
             var params = paramsArray;
-            
+
             var t = setInterval(callback,timeout,params);
             timer[i] = t;
         }
@@ -1485,7 +1485,7 @@ function setFrameGroup(name,urls){
 		var spanWidth = api.winWidth*0.3333 + "px";
 		var allWidth = api.winWidth*0.3333*typeLength + "px";
 	}
-    var data = {list: testType,spanWidth:spanWidth,allWidth:allWidth};	
+    var data = {list: testType,spanWidth:spanWidth,allWidth:allWidth};
 	var html = template('scriptDiv1',data);
 	var frameArr = [];
 	var index = 0;
