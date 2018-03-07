@@ -76,6 +76,14 @@
 				border-radius: 5px;
 				color: #FFFFFF;
 			}
+			.miclist{
+				line-height: 36px;
+			}
+			.miclist li{
+				list-style: none;
+				border-bottom: 1px solid rgba(0,0,0,0.2);
+				padding:0 15px;
+			}
 		</style>
 	</head>
 	<body>
@@ -93,8 +101,16 @@
 				<span class="fa fa-stop"></span>
 			</div>
 			<p class="time"></p>
+			<ul class="miclist">
+				
+			</ul>
 		</div>
 	</body>
+	<script type="text/html" id="miclis">
+		<%for(var j=0;j<msg.length;j++){%>
+			<li onclick="play(<%=msg[i].url%>)"><%=msg[i].name%></li>
+		<%}%>
+	</script>
 	<script type="text/html" id="playtime">
 		<span><%=msg.current%></span>/<span><%=msg.duration%></span>
 	</script>
@@ -103,9 +119,9 @@
 	<script src="../../script/template-native.js"></script>
 	<script src="../../script/apiCloud.js"></script>
 	<script>
+		
 		apiready = function(){
-			var cc = addmic();
-			play(cc);
+			search();
 		}
 		function play(url){
 			$(".fa-play").css('display','none');
@@ -143,14 +159,51 @@
 			var fileBrowser = api.require('fileBrowser');
 			fileBrowser.open(function(ret, err){
 			    if (ret) {
+			    	var parms={};
 			    	fileBrowser.close();
-			        alert(JSON.stringify(ret));
-			        var cc = ret.url;
-			        return cc;
+			        alert(JSON.stringify(ret.url));
+			        parms.name = strcut(ret.url);
+			        parms.url = ret.url;
+			        api.ajax({
+					    url: "https://d.apicloud.com/mcm/api/music",
+					    method: 'post',
+					    data: parms
+					}, function(ret, err) {
+					    if (ret) {
+					        api.toast(JSON.stringify(ret));
+					    } else {
+					        api.toast({msg:"加载失败"});
+					    }
+					});
 			    } else {
 			    	fileBrowser.close();
-			        alert('选择的文件读取失败');
+			        alert('读取失败');
 			    }
+			});
+		}
+		
+		function strcut(str){
+			var he = str.split('/');
+			var heat = he[he.length-1];
+			var hesh = heat.split('.');
+			document.querySelector(".miclist").innerHTML += "<li onclick=play("+str+")>"+hesh[0]+"</li>";
+			return hesh[0];
+		}
+		
+		function search(){
+			var db = api.require('db');
+			var sql = 'SELECT * FROM music';
+			db.selectSql({
+			    name:'databaseName',
+			    sql: sql
+			}, function(ret, err){
+			    if(ret.status){
+			        var data = {msg:ret.data};
+			        var html = template('miclis',data);
+			        document.querySelector(".miclist").innerHTML = html;
+			    } else{
+			    	
+			    };
 			});
 		}
 	</script>
