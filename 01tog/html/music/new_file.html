@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    	<meta name="apple-mobile-web-app-capable" content="yes">
+    	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+	</head>
+	<body>
+		<div>
+			<ul class="miclist">
+				
+			</ul>
+		</div>
+	</body>
+	<script type="text/html" id="miclis">
+		<li>123</li>
+		<li>123</li>
+		<li>123</li>
+		<li>123</li>
+		
+		<%for(var j=0;j<msg.length;j++){%>
+			<li onclick="play('<%=msg[j].url%>')"><%=msg[j].name%></li>
+		<%}%>
+	</script>
+
+	<script src="../../script/jquery-3.2.1.min.js"></script>
+	<script src="../../script/template-native.js"></script>
+	<script>
+
+//			var data = {msg:ret};
+			var data = {};
+			var html = template('miclis',data);
+			document.querySelector(".miclist").innerHTML = html;
+	</script>
+</html>

@@ -40,3 +40,20 @@ function initOpen(pageParam){
 	bottom_h=0;
 	openNewFrames(api.winName+'_body','./'+api.winName+'_body.html',pageParam,head_h,bottom_h);
 }
+
+
+//
+function openNewWin2(){
+	$api.fixStatusBar($api.dom('#topbar'));
+    var header = $api.offset($api.dom('#topbar'));
+	api.openFrame({
+	    name: 'wonderfulTime_comment_body',
+	    url: './wonderfulTime_comment_body.html',
+	    rect:{
+            x:0,
+	        y:header.h,
+	        w:'auto',
+	        h:'auto'
+		}
+	});
+}

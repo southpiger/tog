@@ -148,6 +148,7 @@
 			    url: urls
 			});
 		}
+		url=http://api.jisuapi.com/news/get?channel='+ht+'&start='+td+'&num=5&appkey=61bdbb002f1edc13
 		//上拉加载
 		function morenews(ht){
 			api.addEventListener({
@@ -156,7 +157,7 @@
 				$('.more').css('display','block')
 		        td+=5;
 				api.ajax({
-				    url: 'http://api.jisuapi.com/news/get?channel='+ht+'&start='+td+'&num=5&appkey=61bdbb002f1edc13',
+				    url: url,
 				    method: 'get'
 				}, function(ret, err) {
 				    if (ret) {
